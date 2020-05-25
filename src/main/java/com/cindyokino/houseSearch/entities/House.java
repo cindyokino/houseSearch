@@ -17,17 +17,19 @@ public class House {
 	private String city;
 	private String neighborhood;
 	private LocalDate registeredOn;
+	private LocalDate updatedOn;
 	
 	public House() {		
 	}
 
-	public House(Long id, Double price, String address, String city, String neighborhood, LocalDate registeredOn) {
+	public House(Long id, Double price, String address, String city, String neighborhood, LocalDate registeredOn,LocalDate updatedOn) {
 		this.id = id;
 		this.price = price;
 		this.address = address;
 		this.city = city;
 		this.neighborhood = neighborhood;
 		this.registeredOn = registeredOn;
+		this.updatedOn = updatedOn;
 	}
 
 	public Long getId() {
@@ -76,6 +78,14 @@ public class House {
 
 	public void setRegisteredOn(LocalDate registeredOn) {
 		this.registeredOn = registeredOn;
+	}
+
+	public LocalDate getUpdatedOn() {
+		return updatedOn;
+	}
+
+	public void setUpdatedOn(LocalDate updatedOn) {
+		this.updatedOn = updatedOn;
 	}
 
 	@Override
