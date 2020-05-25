@@ -1,0 +1,15 @@
+[
+    {
+        "id": "14158660",
+        "price": "288800",
+        "address": "2000, Rue Jean-Béliveau",
+        "city": "Longueuil (Le Vieux-Longueuil)",
+        "neighborhood": "Quartier Centre"
+    },
+    {
+        "id": "13262772",
+        "price": "1120000",
+        "address": "864, boulevard Queen",
+        "city": "Saint-Lambert (Montérégie)"
+    }
+]
