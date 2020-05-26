@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,21 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cindyokino.houseSearch.entities.House;
+import com.cindyokino.houseSearch.services.HouseService;
 
 @RestController
 @RequestMapping(value = "/houses")
 public class HouseController {
-
 	List<House> list = new ArrayList<>();
-	House house1 = new House(14158660L, 200_000d, "2000, Rue Jean-Béliveau", "Longueuil (Le Vieux-Longueuil)",
-			"Quartier Centre", LocalDate.now(), LocalDate.now());
-	House house2 = new House(13262772L, 1_120_000d, "864, boulevard Queen", "Saint-Lambert (Montérégie)", null,
-			LocalDate.now(), LocalDate.now());
-
-	public HouseController() {
-		list.add(house1);
-		list.add(house2);
-	}
+	
+	@Autowired
+	private HouseService houseService;
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<House> findHouseById(@PathVariable Long id) {
@@ -43,21 +38,22 @@ public class HouseController {
 	public ResponseEntity<List<House>> findHouses(
 			@RequestParam(value = "minPrice", defaultValue = "") Double minPrice,
 			@RequestParam(value = "maxPrice", defaultValue = "") Double maxPrice) {
-		if(minPrice == null && maxPrice == null) {
-			return ResponseEntity.ok().body(list);
-		}
-		List<House> houses = list.stream().filter(house -> {
-			if(minPrice != null && maxPrice != null) {
-				return house.getPrice() > minPrice && house.getPrice() < maxPrice;				
-			}	
-			else if(minPrice != null) {
-				return house.getPrice() > minPrice;
-			}
-			else if(maxPrice != null) {
-				return house.getPrice() < maxPrice;
-			}
-			return false;
-		}).collect(Collectors.toList());
+//		if(minPrice == null && maxPrice == null) {
+//			return ResponseEntity.ok().body(list);
+//		}
+//		List<House> houses = list.stream().filter(house -> {
+//			if(minPrice != null && maxPrice != null) {
+//				return house.getPrice() > minPrice && house.getPrice() < maxPrice;				
+//			}	
+//			else if(minPrice != null) {
+//				return house.getPrice() > minPrice;
+//			}
+//			else if(maxPrice != null) {
+//				return house.getPrice() < maxPrice;
+//			}
+//			return false;
+//		}).collect(Collectors.toList());
+		List<House> houses = houseService.findAll();
 		return ResponseEntity.ok().body(houses);
 	}
 
