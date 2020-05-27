@@ -1,9 +1,7 @@
 package com.cindyokino.houseSearch.controllers;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,56 +28,34 @@ public class HouseController {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<House> findHouseById(@PathVariable Long id) {
-		House house = list.stream().filter(h -> h.getId().equals(id)).findAny().get();
-		return ResponseEntity.ok().body(house);
+		House obj = houseService.findById(id);
+		return ResponseEntity.ok().body(obj);
 	}
 
 	@GetMapping
 	public ResponseEntity<List<House>> findHouses(
 			@RequestParam(value = "minPrice", defaultValue = "") Double minPrice,
-			@RequestParam(value = "maxPrice", defaultValue = "") Double maxPrice) {
-//		if(minPrice == null && maxPrice == null) {
-//			return ResponseEntity.ok().body(list);
-//		}
-//		List<House> houses = list.stream().filter(house -> {
-//			if(minPrice != null && maxPrice != null) {
-//				return house.getPrice() > minPrice && house.getPrice() < maxPrice;				
-//			}	
-//			else if(minPrice != null) {
-//				return house.getPrice() > minPrice;
-//			}
-//			else if(maxPrice != null) {
-//				return house.getPrice() < maxPrice;
-//			}
-//			return false;
-//		}).collect(Collectors.toList());
-		List<House> houses = houseService.findAll();
+			@RequestParam(value = "maxPrice", defaultValue = "") Double maxPrice) {		
+		List<House> houses = houseService.findAll(minPrice, maxPrice);
 		return ResponseEntity.ok().body(houses);
 	}
 
 	@PostMapping
 	public ResponseEntity<Void> insertHouse(@RequestBody List<House> houses) {
-		houses.forEach(house -> {
-			System.out.println(house.getId());
-			System.out.println(house.getCity());
-			System.out.println(house.getAddress());
-			System.out.println(house.getPrice());
-			System.out.println(house.getRegisteredOn());
-			System.out.println(house.getUpdatedOn());
-		});
+		houses = houseService.insert(houses);
 		return ResponseEntity.accepted().build();
 	}
 
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<House> updateHouse(@PathVariable Long id, @RequestBody House obj) {
-		House house = list.stream().filter(h -> h.getId().equals(id)).findAny().get();
-		house.setAddress(obj.getAddress());
-		house.setCity(obj.getCity());
-		house.setId(obj.getId());
-		house.setNeighborhood(obj.getNeighborhood());
-		house.setPrice(obj.getPrice());
-		house.setUpdatedOn(obj.getUpdatedOn());
-		return ResponseEntity.ok().body(house);
+	@PutMapping
+	public ResponseEntity<House> updateHouse(@RequestBody House house) {
+		House updatedHouse;
+		try {
+			updatedHouse = houseService.update(house);
+		}catch(IllegalArgumentException exception) {
+			return ResponseEntity.badRequest().build();
+		}
+		
+		return ResponseEntity.ok().body(updatedHouse);
 	}
 
 	@DeleteMapping(value = "/{id}")

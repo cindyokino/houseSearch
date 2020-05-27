@@ -1,6 +1,8 @@
 package com.cindyokino.houseSearch.services;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +14,36 @@ import com.cindyokino.houseSearch.repositories.HouseRepository;
 public class HouseService {
 	
 	@Autowired
-	private HouseRepository repository;
+	private HouseRepository houseRepository;
 	
-	public List<House> findAll() { 
-		return repository.findAll();
+	public List<House> findAll(Double minPrice, Double maxPrice) { 		
+		return houseRepository.customMethod(minPrice, maxPrice);
+		
 	}
+	
+	public House findById(Long id){		
+	Optional<House> obj = houseRepository.findById(id);
+	return obj.get();
+	} 
 
+	public List<House> insert(List<House> houses) {
+		houses.forEach(h -> {
+			if (houseRepository.findById(h.getId()) == null) {				
+				h.setRegisteredOn(LocalDate.now());				
+			}
+			h.setUpdatedOn(LocalDate.now());
+		});
+		return houseRepository.saveAll(houses);
+	}
+	
+	public House update(House house) {
+		House houseInDatabase = houseRepository.findById(house.getId()).orElse(null);
+		if(houseInDatabase == null) {
+			System.out.println("ERROR: House to update not found");
+			throw new IllegalArgumentException("House to update not found");
+		}		
+		house.setRegisteredOn(houseInDatabase.getRegisteredOn());
+		house.setUpdatedOn(LocalDate.now());
+		return houseRepository.save(house);
+	}
 }

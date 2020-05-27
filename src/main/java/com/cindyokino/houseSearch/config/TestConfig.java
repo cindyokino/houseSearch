@@ -1,6 +1,7 @@
 package com.cindyokino.houseSearch.config;
 
 import java.time.LocalDate;
+import java.time.Month;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,7 +19,7 @@ public class TestConfig implements CommandLineRunner { // CommandLineRunner inic
 	@Override
 	public void run(String... args) throws Exception {
 
-		House house1 = new House(14158660L, 200_000d, "2000, Rue Jean-Béliveau", "Longueuil (Le Vieux-Longueuil)", "Quartier Centre", LocalDate.now(), LocalDate.now());
+		House house1 = new House(14158660L, 200_000d, "2000, Rue Jean-Béliveau", "Longueuil (Le Vieux-Longueuil)", "Quartier Centre", LocalDate.of(2020, Month.JANUARY, 01), LocalDate.of(2020, Month.JANUARY, 02));
 		House house2 = new House(13262772L, 1_120_000d, "864, boulevard Queen", "Saint-Lambert (Montérégie)", null, LocalDate.now(), LocalDate.now());
 
 		houseRepository.save(house1);
