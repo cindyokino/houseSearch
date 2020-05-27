@@ -23,7 +23,7 @@ public class HouseService {
 	
 	public House findById(Long id){		
 	Optional<House> obj = houseRepository.findById(id);
-	return obj.get();
+	return obj.orElseThrow(() -> new IllegalArgumentException("ERROR: Object not found at the database"));
 	} 
 
 	public List<House> insert(List<House> houses) {
@@ -45,5 +45,11 @@ public class HouseService {
 		house.setRegisteredOn(houseInDatabase.getRegisteredOn());
 		house.setUpdatedOn(LocalDate.now());
 		return houseRepository.save(house);
+	}
+	
+	public void deleteById(Long id) {
+		if(!(findById(id)==null)) {
+			houseRepository.deleteById(id);
+		}		
 	}
 }

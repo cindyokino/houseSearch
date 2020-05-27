@@ -60,8 +60,7 @@ public class HouseController {
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteHouse(@PathVariable Long id) {
-		House house = list.stream().filter(h -> h.getId().equals(id)).findAny().get();
-		list.remove(house);
+		houseService.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
 }
