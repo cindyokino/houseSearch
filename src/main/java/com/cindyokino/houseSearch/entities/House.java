@@ -12,7 +12,7 @@ public class House {
 	
 	@Id
 	private Long id;
-	private Double price;
+	private Long price;
 	private String address;
 	private String city;
 	private String neighborhood;
@@ -22,7 +22,7 @@ public class House {
 	public House() {		
 	}
 
-	public House(Long id, Double price, String address, String city, String neighborhood, LocalDate registeredOn,LocalDate updatedOn) {
+	public House(Long id, Long price, String address, String city, String neighborhood, LocalDate registeredOn,LocalDate updatedOn) {
 		this.id = id;
 		this.price = price;
 		this.address = address;
@@ -40,11 +40,11 @@ public class House {
 		this.id = id;
 	}
 
-	public Double getPrice() {
+	public Long getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(Long price) {
 		this.price = price;
 	}
 

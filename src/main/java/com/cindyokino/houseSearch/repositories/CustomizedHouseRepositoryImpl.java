@@ -14,7 +14,15 @@ public class CustomizedHouseRepositoryImpl implements CustomizedHouseRepository 
 	private EntityManager entityManager;
 
 	@Override
-	public List<House> customMethod(Double minPrice, Double maxPrice) {
+	public List<House> customMethod(Long minPrice, Long maxPrice) {
+		String findAllByRangeQueryStr = createHouseQueryString(minPrice, maxPrice);
+
+		TypedQuery<House> query = entityManager.createQuery(findAllByRangeQueryStr, House.class);
+
+		return query.getResultList();
+	}
+
+	public String createHouseQueryString(Long minPrice, Long maxPrice) {
 		String findAllByRangeQueryStr = "select h from House h";
 		if (minPrice != null || maxPrice != null) {
 			findAllByRangeQueryStr = findAllByRangeQueryStr + " where";
@@ -30,10 +38,7 @@ public class CustomizedHouseRepositoryImpl implements CustomizedHouseRepository 
 				findAllByRangeQueryStr = findAllByRangeQueryStr + " h.price < " + maxPrice;
 			}
 		}
-
-		TypedQuery<House> query = entityManager.createQuery(findAllByRangeQueryStr, House.class);
-
-		return query.getResultList();
+		return findAllByRangeQueryStr;
 	}
 
 	// select h from House h where h.price > ?1 and h.price < ?2

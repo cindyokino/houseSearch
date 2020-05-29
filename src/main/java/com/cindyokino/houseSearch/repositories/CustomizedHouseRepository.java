@@ -6,6 +6,6 @@ import com.cindyokino.houseSearch.entities.House;
 
 public interface CustomizedHouseRepository {
 
-	List<House> customMethod(Double minPrice, Double maxPrice);
+	List<House> customMethod(Long minPrice, Long maxPrice);
 	
 }

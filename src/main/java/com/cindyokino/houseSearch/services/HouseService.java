@@ -16,7 +16,7 @@ public class HouseService {
 	@Autowired
 	private HouseRepository houseRepository;
 	
-	public List<House> findAll(Double minPrice, Double maxPrice) { 		
+	public List<House> findAll(Long minPrice, Long maxPrice) { 		
 		return houseRepository.customMethod(minPrice, maxPrice);
 		
 	}

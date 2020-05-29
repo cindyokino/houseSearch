@@ -31,11 +31,10 @@ public class HouseController {
 		House obj = houseService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-
 	@GetMapping
 	public ResponseEntity<List<House>> findHouses(
-			@RequestParam(value = "minPrice", defaultValue = "") Double minPrice,
-			@RequestParam(value = "maxPrice", defaultValue = "") Double maxPrice) {		
+			@RequestParam(value = "minPrice", defaultValue = "") Long minPrice,
+			@RequestParam(value = "maxPrice", defaultValue = "") Long maxPrice) {		
 		List<House> houses = houseService.findAll(minPrice, maxPrice);
 		return ResponseEntity.ok().body(houses);
 	}
