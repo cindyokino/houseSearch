@@ -1,31 +1,149 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>House Search Application</title>
-    </head>
 
-    <body>
-        <h1>Register Form</h1>
-        <form>
-            <div>
-                <label for="houseId">Id:</label>
-                <input id="houseId" type="number" placeholder="Id number">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>House Search Application</title>
+    <link rel="stylesheet" type="text/css" href="registerForm.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 section">
+                <h1>Register Form</h1>
+
+                <div class="d-flex justify-content-center" id="radioButtons">
+                    <div class="radio" style="margin-right: 50px">
+
+                        <label for="oneHouse">
+                            <input id="oneHouse" onclick="showForm()" name="add" type="radio" checked>
+                            Add one house
+                        </label>
+                    </div>
+                    <div class="radio">
+
+                        <label for="multipleHouses">
+                            <input id="multipleHouses" onclick="showForm()" name="add" type="radio">
+                            Add multiple houses
+                        </label>
+                    </div>
+                </div>
+
+                <div id="oneHouseForm">
+                    <form>
+                        <h4>Add one house:</h4>
+                        <div class="form-group">
+                            <label for="houseId">Id:</label>
+                            <input id="houseId" class="form-control" type="number" placeholder="Id number">
+                        </div>
+                        <div class="form-group">
+                            <label for="housePrice">Price:</label>
+                            <input id="housePrice" class="form-control" type="number" placeholder="Price">
+                        </div>
+                        <div class="form-group">
+                            <label for="houseAddress">Address:</label>
+                            <input id="houseAddress" class="form-control" type="text" placeholder="Address">
+                        </div>
+                        <div class="form-group">
+                            <label for="houseCity">City:</label>
+                            <input id="houseCity" class="form-control" type="text" placeholder="City">
+                        </div>
+                        <button class="btn btn-dark" onclick="clickSubmit()">Submit</button>
+                    </form>
+                    <br />
+                </div>
+
+                <div id="multipleHousesForm">
+                    <form>
+                        <h4>Add multiple houses (Json format):</h4>
+                        <div>
+                            <textarea rows="4" cols="35"></textarea>
+                        </div>
+                        <div>
+                            <button class="submit" onclick="clickSubmit()">Submit</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div>
-                <label for="housePrice">Price:</label>
-                <input id="housePrice" type="number" placeholder="Price">
+        </div>
+        <br />
+
+        <div class="row">
+            <div id="houseTable" class="col-12 section table-responsive">
+                <h1>Houses</h1>
+                <table class="table">
+                    <tr>
+                        <th style="white-space: nowrap">Id</th>
+                        <th style="white-space: nowrap">Price</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>Neighborhood</th>
+                        <th style="white-space: nowrap">Registered on</th>
+                        <th style="white-space: nowrap">Updated on</th>
+                    </tr>
+                    <tr>
+                        <td>14158660</td>
+                        <td>200000</td>
+                        <td>2000, Rue Jean-Béliveau</td>
+                        <td>Longueuil (Le Vieux-Longueuil) dashduash dauhd hdusah</td>
+                        <td>Quartier Centre</td>
+                        <td>2020-01-01</td>
+                        <td>2020-01-02</td>
+                    </tr>
+                    <tr>
+                        <td>14158660</td>
+                        <td>200000</td>
+                        <td>2000, Rue Jean-Béliveau</td>
+                        <td>Longueuil (Le Vieux-Longueuil) dashduash dauhd hdusah</td>
+                        <td>Quartier Centre</td>
+                        <td>2020-01-01</td>
+                        <td>2020-01-02</td>
+                    </tr>
+                    <tr>
+                        <td>14158660</td>
+                        <td>200000</td>
+                        <td>2000, Rue Jean-Béliveau</td>
+                        <td>Longueuil (Le Vieux-Longueuil) dashduash dauhd hdusah</td>
+                        <td>Quartier Centre</td>
+                        <td>2020-01-01</td>
+                        <td>2020-01-02</td>
+                    </tr>
+                    <tr>
+                        <td>14158660</td>
+                        <td>200000</td>
+                        <td>2000, Rue Jean-Béliveau</td>
+                        <td>Longueuil (Le Vieux-Longueuil) dashduash dauhd hdusah</td>
+                        <td>Quartier Centre</td>
+                        <td>2020-01-01</td>
+                        <td>2020-01-02</td>
+                    </tr>
+                </table>
             </div>
-            <div>
-                <label for="houseAddress">Address:</label>
-                <input id="houseAddress" type="text" placeholder="Address">
-            </div>
-            <div>
-                <label for="houseCity">City:</label>
-                <input id="houseCity" type="text" placeholder="City">
-            </div>
-            <div>
-                <button>Submit</button>
-            </div>
-        </form>
-    </body>
+        </div>
+    </div>
+
+</body>
+
+
+<script language="javascript">
+    function showForm() {
+        if (document.getElementById('oneHouse').checked) {
+            document.getElementById('oneHouseForm').style.display = "";
+            document.getElementById('multipleHousesForm').style.display = "none";
+        } else {
+            document.getElementById('oneHouseForm').style.display = "none";
+            document.getElementById('multipleHousesForm').style.display = "";
+        }
+    }
+
+    showForm();
+
+    function clickSubmit() {
+        alert("Done!");
+    }
+</script>
+
 </html>
