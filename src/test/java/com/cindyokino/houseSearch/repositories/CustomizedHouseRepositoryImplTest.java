@@ -1,10 +1,8 @@
-package com.cindyokino.repostories;
+package com.cindyokino.houseSearch.repositories;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-
-import com.cindyokino.houseSearch.repositories.CustomizedHouseRepositoryImpl;
 
 public class CustomizedHouseRepositoryImplTest {
 
