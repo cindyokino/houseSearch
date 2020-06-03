@@ -1,0 +1,20 @@
+body {
+    font-family: "Nunito", sans-serif;
+    background: #c3dce7;
+}
+
+h1 {
+    text-align: center;
+}
+
+.section {
+    background: white;
+    border: 3px solid #2980b9;
+    padding: 20px;    
+    box-shadow: 0 0 3px rgba(0,0,0, 0.1);
+}
+
+footer {
+    text-align: center;
+    padding-top: 15px;
+}

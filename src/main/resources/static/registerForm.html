@@ -33,7 +33,7 @@
                 </div>
 
                 <div id="oneHouseForm">
-                    <form>
+                    <form onsubmit="return false">
                         <h4>Add one house:</h4>
                         <div class="form-group">
                             <label for="houseId">Id:</label>
@@ -51,19 +51,19 @@
                             <label for="houseCity">City:</label>
                             <input id="houseCity" class="form-control" type="text" placeholder="City">
                         </div>
-                        <button class="btn btn-dark" onclick="clickSubmit()">Submit</button>
+                        <button class="btn btn-dark" onclick="register()">Submit</button>
                     </form>
                     <br />
                 </div>
 
                 <div id="multipleHousesForm">
-                    <form>
+                    <form onsubmit="register()">
                         <h4>Add multiple houses (Json format):</h4>
                         <div>
                             <textarea rows="4" cols="35"></textarea>
                         </div>
                         <div>
-                            <button class="submit" onclick="clickSubmit()">Submit</button>
+                            <button class="btn btn-dark" onclick="register()">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -125,6 +125,11 @@
         </div>
     </div>
 
+    <footer>
+        <p>Author: Cindy Okino<br>
+        <a href="mailto:cindy-okino@hotmail.com">cindy-okino@hotmail.com</a></p>
+    </footer>
+
 </body>
 
 
@@ -141,8 +146,26 @@
 
     showForm();
 
-    function clickSubmit() {
-        alert("Done!");
+    function register() {
+        let house = {};
+
+        house.id = document.getElementById("houseId").value;
+        house.price = document.getElementById("housePrice").value;
+        house.address = document.getElementById("houseAddress").value;
+        house.city = document.getElementById("houseCity").value;
+
+        let houseArray = new Array();
+        houseArray.push(house);
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+             if (this.readyState == 4 && this.status == 200) {
+                 alert(this.responseText);
+             }
+        };
+        xhttp.open("POST", "http://localhost:8080/houses", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(houseArray));
     }
 </script>
 
