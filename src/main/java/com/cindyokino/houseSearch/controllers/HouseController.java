@@ -31,6 +31,7 @@ public class HouseController {
 		House obj = houseService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
+	
 	@GetMapping
 	public ResponseEntity<List<House>> findHouses(
 			@RequestParam(value = "minPrice", defaultValue = "") Long minPrice,
@@ -40,9 +41,9 @@ public class HouseController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insertHouse(@RequestBody List<House> houses) {
+	public ResponseEntity<List<House>> insertHouse(@RequestBody List<House> houses) {
 		houses = houseService.insert(houses);
-		return ResponseEntity.accepted().build();
+		return ResponseEntity.ok(houses);
 	}
 
 	@PutMapping
