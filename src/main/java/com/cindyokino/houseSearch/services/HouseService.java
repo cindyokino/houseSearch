@@ -28,9 +28,10 @@ public class HouseService {
 
 	public List<House> insert(List<House> houses) {
 		houses.forEach(h -> {
-			if (houseRepository.findById(h.getId()) == null) {
-				h.setRegisteredOn(LocalDate.now());
-			}
+			Optional<House> optionalFoundHouse = houseRepository.findById(h.getId());
+			optionalFoundHouse.ifPresentOrElse(
+					foundHouse -> h.setRegisteredOn(foundHouse.getRegisteredOn()), 
+					() -> h.setRegisteredOn(LocalDate.now()));
 			h.setUpdatedOn(LocalDate.now());
 		});
 		return houseRepository.saveAll(houses);
