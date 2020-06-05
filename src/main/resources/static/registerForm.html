@@ -2,171 +2,210 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>House Search Application</title>
-    <link rel="stylesheet" type="text/css" href="registerForm.css">
+<link rel="icon" type="image/png" href="houseSearchFavicon.png">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<title>House Search Application</title>
+<link rel="stylesheet" type="text/css" href="registerForm.css">
 </head>
 
 <body>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-12 section">
-                <h1>Register Form</h1>
+	<div class="container">
+		<div class="row">
+			<div class="col-12 section">
+				<h1>Register Form</h1>
 
-                <div class="d-flex justify-content-center" id="radioButtons">
-                    <div class="radio" style="margin-right: 50px">
+				<div class="d-flex justify-content-center" id="radioButtons">
+					<div class="radio" style="margin-right: 50px">
 
-                        <label for="oneHouse">
-                            <input id="oneHouse" onclick="showForm()" name="add" type="radio" checked>
-                            Add one house
-                        </label>
-                    </div>
-                    <div class="radio">
+						<label for="oneHouse"> <input id="oneHouse"
+							onclick="showForm()" name="add" type="radio" checked> Add
+							one house
+						</label>
+					</div>
+					<div class="radio">
 
-                        <label for="multipleHouses">
-                            <input id="multipleHouses" onclick="showForm()" name="add" type="radio">
-                            Add multiple houses
-                        </label>
-                    </div>
-                </div>
+						<label for="multipleHouses"> <input id="multipleHouses"
+							onclick="showForm()" name="add" type="radio"> Add
+							multiple houses
+						</label>
+					</div>
+				</div>
 
-                <div id="oneHouseForm">
-                    <form onsubmit="return false">
-                        <h4>Add one house:</h4>
-                        <div class="form-group">
-                            <label for="houseId">Id:</label>
-                            <input id="houseId" class="form-control" type="number" placeholder="Id number">
-                        </div>
-                        <div class="form-group">
-                            <label for="housePrice">Price:</label>
-                            <input id="housePrice" class="form-control" type="number" placeholder="Price">
-                        </div>
-                        <div class="form-group">
-                            <label for="houseAddress">Address:</label>
-                            <input id="houseAddress" class="form-control" type="text" placeholder="Address">
-                        </div>
-                        <div class="form-group">
-                            <label for="houseCity">City:</label>
-                            <input id="houseCity" class="form-control" type="text" placeholder="City">
-                        </div>
-                        <button class="btn btn-dark" onclick="register()">Submit</button>
-                    </form>
-                    <br />
-                </div>
+				<div id="oneHouseForm">
+					<form onsubmit="return false">
+						<h4>Add one house:</h4>
+						<div class="form-group">
+							<label for="houseId">Id:</label> <input id="houseId"
+								class="form-control" type="number" placeholder="Id number">
+						</div>
+						<div class="form-group">
+							<label for="housePrice">Price:</label> <input id="housePrice"
+								class="form-control" type="number" placeholder="Price">
+						</div>
+						<div class="form-group">
+							<label for="houseAddress">Address:</label> <input
+								id="houseAddress" class="form-control" type="text"
+								placeholder="Address">
+						</div>
+						<div class="form-group">
+							<label for="houseNeighborhood">Neighborhood:</label> <input
+								id="houseNeighborhood" class="form-control" type="text"
+								placeholder="Neighborhood">
+						</div>
+						<div class="form-group">
+							<label for="houseCity">City:</label> <input id="houseCity"
+								class="form-control" type="text" placeholder="City">
+						</div>
+						<button class="btn btn-dark" onclick="register()">Submit</button>
+					</form>
+					<br />
+				</div>
 
-                <div id="multipleHousesForm">
-                    <form onsubmit="register()">
-                        <h4>Add multiple houses (Json format):</h4>
-                        <div>
-                            <textarea rows="4" cols="35"></textarea>
-                        </div>
-                        <div>
-                            <button class="btn btn-dark" onclick="register()">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <br />
+				<div id="multipleHousesForm">
+					<form onsubmit="return false">
+						<h4>Add multiple houses (Json format):</h4>
+						<div>
+							<textarea id="multipleHousesTextArea" rows="4" cols=45></textarea>
+						</div>
+						<div>
+							<button class="btn btn-dark" onclick="register()">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<br />
+		<div id="loading" hidden="true"><img src="loading.gif" width="150px"/><br/></div>
+		
+		<div class="row">
+			<div id="houseTable" class="col-12 section table-responsive">
+				<h1>Houses</h1>
+				<table class="table" onsubmit="reload()">
+					<thead>
+						<tr>
+							<th style="white-space: nowrap">Id</th>
+							<th style="white-space: nowrap">Price</th>
+							<th>Address</th>
+							<th>City</th>
+							<th>Neighborhood</th>
+							<th style="white-space: nowrap">Registered on</th>
+							<th style="white-space: nowrap">Updated on</th>
+						</tr>
+					</thead>
+					<tbody>					
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 
-        <div class="row">
-            <div id="houseTable" class="col-12 section table-responsive">
-                <h1>Houses</h1>
-                <table class="table">
-                    <tr>
-                        <th style="white-space: nowrap">Id</th>
-                        <th style="white-space: nowrap">Price</th>
-                        <th>Address</th>
-                        <th>City</th>
-                        <th>Neighborhood</th>
-                        <th style="white-space: nowrap">Registered on</th>
-                        <th style="white-space: nowrap">Updated on</th>
-                    </tr>
-                    <tr>
-                        <td>14158660</td>
-                        <td>200000</td>
-                        <td>2000, Rue Jean-Béliveau</td>
-                        <td>Longueuil (Le Vieux-Longueuil) dashduash dauhd hdusah</td>
-                        <td>Quartier Centre</td>
-                        <td>2020-01-01</td>
-                        <td>2020-01-02</td>
-                    </tr>
-                    <tr>
-                        <td>14158660</td>
-                        <td>200000</td>
-                        <td>2000, Rue Jean-Béliveau</td>
-                        <td>Longueuil (Le Vieux-Longueuil) dashduash dauhd hdusah</td>
-                        <td>Quartier Centre</td>
-                        <td>2020-01-01</td>
-                        <td>2020-01-02</td>
-                    </tr>
-                    <tr>
-                        <td>14158660</td>
-                        <td>200000</td>
-                        <td>2000, Rue Jean-Béliveau</td>
-                        <td>Longueuil (Le Vieux-Longueuil) dashduash dauhd hdusah</td>
-                        <td>Quartier Centre</td>
-                        <td>2020-01-01</td>
-                        <td>2020-01-02</td>
-                    </tr>
-                    <tr>
-                        <td>14158660</td>
-                        <td>200000</td>
-                        <td>2000, Rue Jean-Béliveau</td>
-                        <td>Longueuil (Le Vieux-Longueuil) dashduash dauhd hdusah</td>
-                        <td>Quartier Centre</td>
-                        <td>2020-01-01</td>
-                        <td>2020-01-02</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>Author: Cindy Okino<br>
-        <a href="mailto:cindy-okino@hotmail.com">cindy-okino@hotmail.com</a></p>
-    </footer>
+	<footer>
+		<p>
+			Author: Cindy Okino<br> <a href="mailto:cindy-okino@hotmail.com">cindy-okino@hotmail.com</a>
+		</p>
+	</footer>
 
 </body>
 
 
 <script language="javascript">
-    function showForm() {
-        if (document.getElementById('oneHouse').checked) {
-            document.getElementById('oneHouseForm').style.display = "";
-            document.getElementById('multipleHousesForm').style.display = "none";
-        } else {
-            document.getElementById('oneHouseForm').style.display = "none";
-            document.getElementById('multipleHousesForm').style.display = "";
-        }
-    }
+	function showForm() {
+		if (document.getElementById('oneHouse').checked) {
+			document.getElementById('oneHouseForm').style.display = "";
+			document.getElementById('multipleHousesForm').style.display = "none";
+		} else {
+			document.getElementById('oneHouseForm').style.display = "none";
+			document.getElementById('multipleHousesForm').style.display = "";
+		}
+	}
 
-    showForm();
+	showForm();
 
-    function register() {
-        let house = {};
+	function register() {
+		let requestBody;
+		
+		if (document.getElementById('oneHouse').checked) {
+			let house = {};
+	
+			house.id = document.getElementById("houseId").value;
+			house.price = document.getElementById("housePrice").value;
+			house.address = document.getElementById("houseAddress").value;
+			house.neighborhood = document.getElementById("houseNeighborhood").value;
+			house.city = document.getElementById("houseCity").value;
+	
+			let houseArray = new Array();
+			houseArray.push(house);
+			
+			requestBody = JSON.stringify(houseArray);
+		}else {
+			requestBody = document.getElementById("multipleHousesTextArea").value;
+		}
 
-        house.id = document.getElementById("houseId").value;
-        house.price = document.getElementById("housePrice").value;
-        house.address = document.getElementById("houseAddress").value;
-        house.city = document.getElementById("houseCity").value;
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("loading").hidden = true;
+				updateTable();
+			}
+		};
+		xhttp.open("POST", "http://localhost:8080/houses", true);
+		xhttp.setRequestHeader("Content-type", "application/json");
+		xhttp.send(requestBody);
+		document.getElementById("loading").hidden = false;
+		
+		document.querySelector("#oneHouseForm > form").reset();
+		document.querySelector("#multipleHousesForm > form").reset();
 
-        let houseArray = new Array();
-        houseArray.push(house);
+	}
 
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-             if (this.readyState == 4 && this.status == 200) {
-                 alert(this.responseText);
-             }
-        };
-        xhttp.open("POST", "http://localhost:8080/houses", true);
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(JSON.stringify(houseArray));
-    }
+	function showTable() {
+
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				let housesList  = JSON.parse(this.responseText);
+
+				var tbody = document.querySelector("table > tbody");
+				
+				housesList.forEach(house => {	
+					var row = tbody.insertRow(-1);
+					var cellId = row.insertCell(0);
+					var cellPrice = row.insertCell(1);
+					var cellAddress = row.insertCell(2);
+					var cellNeighborhood = row.insertCell(3);
+					var cellCity = row.insertCell(4);
+					var cellRegisteredOn = row.insertCell(5);
+					var cellUpdatedOn = row.insertCell(6);
+				
+					cellId.innerText = house.id;
+					cellPrice.innerText = house.price;
+					cellAddress.innerText = house.address;
+					cellNeighborhood.innerText = house.neighborhood;
+					cellCity.innerText = house.city;
+					cellRegisteredOn.innerText = house.registeredOn;
+					cellUpdatedOn.innerText = house.updatedOn;				
+				});				
+			}
+		};
+		xhttp.open("GET", "http://localhost:8080/houses", true);
+		xhttp.setRequestHeader("Content-type", "application/json");
+		xhttp.send();
+
+	}	
+	showTable();
+	
+	function updateTable() {		
+		var table = document.querySelector("table");
+		var old_tbody = document.querySelector("table > tbody");
+		var new_tbody = document.createElement('tbody');
+		table.replaceChild(new_tbody, old_tbody);
+		showTable();
+	}
+	
 </script>
 
 </html>
