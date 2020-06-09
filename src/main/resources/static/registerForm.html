@@ -79,8 +79,10 @@
 			</div>
 		</div>
 		<br />
-		<div id="loading" hidden="true"><img src="loading.gif" width="150px"/><br/></div>
-		
+		<div id="loading" hidden="true">
+			<img src="loading.gif" width="150px" /><br />
+		</div>
+
 		<div class="row">
 			<div id="houseTable" class="col-12 section table-responsive">
 				<h1>Houses</h1>
@@ -96,7 +98,7 @@
 							<th style="white-space: nowrap">Updated on</th>
 						</tr>
 					</thead>
-					<tbody>					
+					<tbody>
 					</tbody>
 				</table>
 			</div>
@@ -145,14 +147,14 @@
 			requestBody = document.getElementById("multipleHousesTextArea").value;
 		}
 
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
+		var xhttp = new XMLHttpRequest(); // XMLHttpRequest torna o envio de requisições HTTP muito fácil.
+		xhttp.onreadystatechange = function() { // Basta criar uma instância do objeto...
 			if (this.readyState == 4 && this.status == 200) {
 				document.getElementById("loading").hidden = true;
 				updateTable();
 			}
 		};
-		xhttp.open("POST", "http://localhost:8080/houses", true);
+		xhttp.open("POST", "http://localhost:8080/houses", true); //...abrir uma url e enviar uma requisição.
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send(requestBody);
 		document.getElementById("loading").hidden = false;
@@ -169,7 +171,7 @@
 			if (this.readyState == 4 && this.status == 200) {
 				let housesList  = JSON.parse(this.responseText);
 
-				var tbody = document.querySelector("table > tbody");
+				var tbody = document.querySelector("table > tbody"); // > pega o tbody que é childOf table
 				
 				housesList.forEach(house => {	
 					var row = tbody.insertRow(-1);
