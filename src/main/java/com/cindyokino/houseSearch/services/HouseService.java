@@ -18,7 +18,6 @@ public class HouseService {
 
 	public List<House> findAll(Long minPrice, Long maxPrice) {
 		return houseRepository.customMethod(minPrice, maxPrice);
-
 	}
 
 	public House findById(Long id) {

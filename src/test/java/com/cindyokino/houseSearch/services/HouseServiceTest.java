@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -28,7 +29,7 @@ public class HouseServiceTest {
 
 	@Test
 	public void findAllTest_success() {
-		 House house1 = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(),
+		House house1 = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(),
 				LocalDate.now());
 		House house2 = new House(2L, 450000L, "TestAddress2", "TestCity2", "TestNeighborhood2", LocalDate.now(),
 				LocalDate.now());
@@ -36,11 +37,22 @@ public class HouseServiceTest {
 		List<House> expectedHouses = new ArrayList<>(Arrays.asList(house1, house2));
 
 		Mockito.when(houseRepositoryMock.customMethod(null, null)).thenReturn(expectedHouses);
-				
-		List<House> actualHouses = houseService.findAll(null, null);
-		
-		MatcherAssert.assertThat(actualHouses, Matchers.is(expectedHouses));
 
+		List<House> actualHouses = houseService.findAll(null, null);
+
+		MatcherAssert.assertThat(actualHouses, Matchers.is(expectedHouses));
+	}
+
+	@Test
+	public void findByIdTest_success() {
+		Optional<House> expectedHouse = Optional.of(new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(),
+				LocalDate.now()));
+		
+		Mockito.when(houseRepositoryMock.findById(1L)).thenReturn(expectedHouse);
+		
+		House actualHouse = houseService.findById(1L);
+		
+		MatcherAssert.assertThat(actualHouse, Matchers.is(expectedHouse.get()));		
 	}
 
 }

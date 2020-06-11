@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 public class CustomizedHouseRepositoryImplTest {
 
 	private CustomizedHouseRepositoryImpl customizedHouseRepositoryImpl = new CustomizedHouseRepositoryImpl();
-	
-	
+		
 	@Test
 	public void givenNoFilters_whenCreateQuery_thenReturnQueryWithoutFilters() {
 		String expectedResult = "select h from House h";

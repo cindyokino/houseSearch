@@ -37,7 +37,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class HouseControllerTest {
 
 	@Autowired
-	private MockMvc mockMvc; // MockMvc simula um sistema externo que faz chamadas REST para o sistema interno
+	private MockMvc mockMvc; // MockMvc simula um sistema EXTERNO que faz chamadas REST para o sistema INTERNO
 
 	@Autowired
 	private ObjectMapper objectMapper;
