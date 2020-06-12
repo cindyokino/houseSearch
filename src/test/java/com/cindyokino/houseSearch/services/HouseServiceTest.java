@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -72,6 +73,22 @@ public class HouseServiceTest {
 		MatcherAssert.assertThat(actualHouseList.get(0).getRegisteredOn(), Matchers.is(house.getRegisteredOn()));	
 		MatcherAssert.assertThat(actualHouseList.get(0).getUpdatedOn(), Matchers.is(LocalDate.now()));	
 	}
+	
+	@Test
+	public void insertHouse_forNewId() {
+		House house = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), LocalDate.now());
+
+		List<House> inputList = new ArrayList<>(Arrays.asList(house));
+		
+		Mockito.when(houseRepositoryMock.findById(house.getId())).thenReturn(Optional.empty());
+		Mockito.when(houseRepositoryMock.saveAll(inputList)).thenReturn(inputList);
+		
+		List<House> actualHouseList = houseService.insert(inputList);
+		
+		MatcherAssert.assertThat(actualHouseList.get(0).getRegisteredOn(), Matchers.is(house.getRegisteredOn()));
+		MatcherAssert.assertThat(actualHouseList.get(0).getUpdatedOn(), Matchers.is(house.getUpdatedOn()));
+	}
+	
 
 }
 
