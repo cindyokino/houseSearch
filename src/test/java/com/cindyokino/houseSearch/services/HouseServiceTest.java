@@ -57,7 +57,7 @@ public class HouseServiceTest {
 	}
 	
 	@Test
-	public void insertHouse_forExistingId_keepRegisteredOn() {
+	public void insertHouseTest_forExistingId_keepRegisteredOn() {
 		House house = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now().minusDays(1), LocalDate.now().minusDays(1));
 		List<House> inputList = new ArrayList<>();		
 		inputList.add(house);
@@ -75,7 +75,7 @@ public class HouseServiceTest {
 	}
 	
 	@Test
-	public void insertHouse_forNewId() {
+	public void insertHouseTest_forNewId() {
 		House house = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), LocalDate.now());
 
 		List<House> inputList = new ArrayList<>(Arrays.asList(house));
@@ -85,11 +85,27 @@ public class HouseServiceTest {
 		
 		List<House> actualHouseList = houseService.insert(inputList);
 		
+		MatcherAssert.assertThat(actualHouseList.size(), Matchers.is(1));
 		MatcherAssert.assertThat(actualHouseList.get(0).getRegisteredOn(), Matchers.is(house.getRegisteredOn()));
 		MatcherAssert.assertThat(actualHouseList.get(0).getUpdatedOn(), Matchers.is(house.getUpdatedOn()));
 	}
 	
-
+	@Test
+	public void updateHouseTest_byId() {
+		House house = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now().minusDays(1), LocalDate.now().minusDays(1));
+	
+		Optional<House> expectedHouse = Optional.of(house);
+		
+		Mockito.when(houseRepositoryMock.findById(1L)).thenReturn(expectedHouse);
+		Mockito.when(houseRepositoryMock.save(house)).thenReturn(house);
+	
+		House actualHouse = houseService.update(house);
+		
+		MatcherAssert.assertThat(actualHouse.getRegisteredOn(), Matchers.is(expectedHouse.get().getRegisteredOn()));
+		MatcherAssert.assertThat(actualHouse.getUpdatedOn(), Matchers.is(LocalDate.now()));
+	}
+	
+	
 }
 
 
