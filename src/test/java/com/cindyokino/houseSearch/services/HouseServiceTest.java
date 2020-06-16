@@ -8,8 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -104,6 +106,17 @@ public class HouseServiceTest {
 		
 		MatcherAssert.assertThat(actualHouse.getRegisteredOn(), Matchers.is(expectedHouse.get().getRegisteredOn()));
 		MatcherAssert.assertThat(actualHouse.getUpdatedOn(), Matchers.is(LocalDate.now()));
+	}
+	
+	@Test
+	public void updateHouseTest_forIdNull_checkForException() {
+		House house = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), LocalDate.now());
+
+		Mockito.when(houseRepositoryMock.findById(house.getId())).thenReturn(Optional.empty());
+			
+		Assertions.assertThrows(IllegalArgumentException.class, () -> { // checar se houve uma excecao
+			houseService.update(house);
+		});
 	}
 	
 	@Test
