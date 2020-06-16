@@ -1,12 +1,13 @@
 package com.cindyokino.houseSearch.services;
 
+import static org.mockito.Mockito.verify;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -105,12 +106,16 @@ public class HouseServiceTest {
 		MatcherAssert.assertThat(actualHouse.getUpdatedOn(), Matchers.is(LocalDate.now()));
 	}
 	
-	
+	@Test
+	public void deleteHouseTest_byId() {
+		House house = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now().minusDays(1), LocalDate.now().minusDays(1));
+			
+		Optional<House> expectedHouse = Optional.of(house);
+		
+		Mockito.when(houseRepositoryMock.findById(1L)).thenReturn(expectedHouse);
+				
+		houseService.deleteById(1L);
+		
+		verify(houseRepositoryMock).deleteById(1L);
+	}
 }
-
-
-
-
-
-
-
