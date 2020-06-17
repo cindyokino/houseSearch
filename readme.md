@@ -15,6 +15,7 @@ This is a simulation of an enterprise project, I'm trying to get used to the fol
 
 ### Create a feature to manage house informations:
 * Endpoint to register one or more houses (POST "/houses")
+
 Request body:
 [
     {
@@ -50,6 +51,7 @@ Response body:
 ]
 
 * Endpoint to update a house (PUT "/houses") 
+
 Request body:
 {
     "id": "14158660",
@@ -72,6 +74,7 @@ Response body:
 Response: 200 ok
 
 * Endpoint to list all houses, also filter by house price (GET "/houses" or "/houses?minPrice=100000&maxPrice=300000")
+
 Response body:
 {
     "id": "14158660",
@@ -82,6 +85,7 @@ Response body:
 }
 
 * Endpoint to find house by house id (GET "/houses/{id}")
+
 Response body:
 {
     "id": "14158660",
