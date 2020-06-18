@@ -20,14 +20,12 @@
 
 				<div class="d-flex justify-content-center" id="radioButtons">
 					<div class="radio" style="margin-right: 50px">
-
 						<label for="oneHouse"> <input id="oneHouse"
 							onclick="showForm()" name="add" type="radio" checked> Add
 							one house
 						</label>
 					</div>
 					<div class="radio">
-
 						<label for="multipleHouses"> <input id="multipleHouses"
 							onclick="showForm()" name="add" type="radio"> Add
 							multiple houses
@@ -86,6 +84,31 @@
 		<div class="row">
 			<div id="houseTable" class="col-12 section table-responsive">
 				<h1>Houses</h1>
+				
+				<div class="row">
+					<div class="d-flex justify-content-center col-5 " id="houseSearchById">
+						<form onsubmit="return false">
+							<div class="searchById">
+								<h4>Search by id:</h4>
+								<label for="searchById"><input id="id"
+									class="form-control" type="number" placeholder="Id number"></label>
+								<button class="btn btn-dark" onclick="findById()">Submit</button>
+							</div>
+						</form>
+					</div>
+
+					<div class="d-flex justify-content-center col-7 " id="houseSearchByPrice">
+						<form onsubmit="return false">
+							<div id="searchPrice">
+								<h4>Search by price:</h4>
+								<label for="minPrice"><input id="minPrice"
+									class="form-control" type="number" placeholder="Min price"></label>
+								<label for="maxPrice"><input id="maxPrice"
+									class="form-control" type="number" placeholder="Max price"></label>
+								<button class="btn btn-dark" onclick="findByPrice()">Submit</button>
+							</div>
+						</form>
+					</div>
 				<table class="table" onsubmit="reload()">
 					<thead>
 						<tr>
@@ -104,6 +127,7 @@
 			</div>
 		</div>
 	</div>
+	</div>
 
 	<footer>
 		<p>
@@ -115,6 +139,55 @@
 
 
 <script language="javascript">
+
+	function findById() {
+		let id = document.getElementById("id").value;
+		
+		let xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("loading").hidden = true;
+				console.log(this.responseText);
+			}
+		};
+		xhttp.open("GET", "http://localhost:8080/houses/" + id, true); //...abrir uma url e fazer uma requisicao.
+		xhttp.setRequestHeader("Content-type", "application/json");
+		xhttp.send();
+		document.getElementById("loading").hidden = false;
+		
+		document.querySelector("#houseSearchById > form").reset();
+// 		updateTable();
+	}
+	
+	function findByPrice() {
+		let minPrice = document.getElementById("minPrice").value;
+		let maxPrice = document.getElementById("maxPrice").value;
+		
+		const target = new URL('http://localhost:8080/houses');
+		const params = new URLSearchParams();
+		if(minPrice != "") {
+			params.set('minPrice', minPrice);
+		}
+		if(maxPrice != "") {
+			params.set('maxPrice', maxPrice);
+		}
+		target.search = params.toString();
+		
+		let xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("loading").hidden = true;
+				console.log(this.responseText);
+			}
+		};
+		xhttp.open("GET", target, true); //...abrir uma url e fazer uma requisicao.
+		xhttp.setRequestHeader("Content-type", "application/json");
+		xhttp.send();
+		document.getElementById("loading").hidden = false;
+		
+// 		updateTable();
+	}
+
 	function showForm() {
 		if (document.getElementById('oneHouse').checked) {
 			document.getElementById('oneHouseForm').style.display = "";
@@ -126,7 +199,7 @@
 	}
 
 	showForm();
-
+		
 	function register() {
 		let requestBody;
 		
@@ -147,39 +220,37 @@
 			requestBody = document.getElementById("multipleHousesTextArea").value;
 		}
 
-		var xhttp = new XMLHttpRequest(); // XMLHttpRequest torna o envio de requisições HTTP muito fácil.
-		xhttp.onreadystatechange = function() { // Basta criar uma instância do objeto...
+		var xhttp = new XMLHttpRequest(); // XMLHttpRequest torna o envio de requisicoes HTTP muito facil.
+		xhttp.onreadystatechange = function() { // Basta criar uma instï¿½ncia do objeto...
 			if (this.readyState == 4 && this.status == 200) {
 				document.getElementById("loading").hidden = true;
 				updateTable();
 			}
 		};
-		xhttp.open("POST", "http://localhost:8080/houses", true); //...abrir uma url e enviar uma requisição.
+		xhttp.open("POST", "http://localhost:8080/houses", true); //...abrir uma url e enviar uma requisicao.
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send(requestBody);
 		document.getElementById("loading").hidden = false;
 		
 		document.querySelector("#oneHouseForm > form").reset();
 		document.querySelector("#multipleHousesForm > form").reset();
-
 	}
 
 	function showTable() {
-
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				let housesList  = JSON.parse(this.responseText);
 
-				var tbody = document.querySelector("table > tbody"); // > pega o tbody que é childOf table
+				var tbody = document.querySelector("table > tbody"); // > pega o tbody que e o childOf table
 				
 				housesList.forEach(house => {	
 					var row = tbody.insertRow(-1);
 					var cellId = row.insertCell(0);
 					var cellPrice = row.insertCell(1);
 					var cellAddress = row.insertCell(2);
-					var cellNeighborhood = row.insertCell(3);
-					var cellCity = row.insertCell(4);
+					var cellCity = row.insertCell(3);
+					var cellNeighborhood = row.insertCell(4);
 					var cellRegisteredOn = row.insertCell(5);
 					var cellUpdatedOn = row.insertCell(6);
 				
@@ -196,9 +267,9 @@
 		xhttp.open("GET", "http://localhost:8080/houses", true);
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send();
-
 	}	
-	showTable();
+	
+	showTable(); // chama a funcao showTable()
 	
 	function updateTable() {		
 		var table = document.querySelector("table");
@@ -206,7 +277,7 @@
 		var new_tbody = document.createElement('tbody');
 		table.replaceChild(new_tbody, old_tbody);
 		showTable();
-	}
+	}	
 	
 </script>
 
