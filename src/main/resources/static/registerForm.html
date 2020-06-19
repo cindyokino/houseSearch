@@ -78,15 +78,18 @@
 		</div>
 		<br />
 		<div id="loading" hidden="true">
-			<img src="loading.gif" width="150px" /><br />
+			<img src="loading.gif" width="150px"/><br />
 		</div>
 
 		<div class="row">
 			<div id="houseTable" class="col-12 section table-responsive">
 				<h1>Houses</h1>
-				
+
 				<div class="row">
-					<div class="d-flex justify-content-center col-5 " id="houseSearchById">
+					<div class="d-flex justify-content-center col-2">
+						<img src="search.png" width="80px">
+					</div>
+					<div class="d-flex justify-content-center col-4 " id="houseSearchById">
 						<form onsubmit="return false">
 							<div class="searchById">
 								<h4>Search by id:</h4>
@@ -97,7 +100,7 @@
 						</form>
 					</div>
 
-					<div class="d-flex justify-content-center col-7 " id="houseSearchByPrice">
+					<div class="d-flex justify-content-center col-6 " id="houseSearchByPrice">
 						<form onsubmit="return false">
 							<div id="searchPrice">
 								<h4>Search by price:</h4>
@@ -109,24 +112,27 @@
 							</div>
 						</form>
 					</div>
-				<table class="table" onsubmit="reload()">
-					<thead>
-						<tr>
-							<th style="white-space: nowrap">Id</th>
-							<th style="white-space: nowrap">Price</th>
-							<th>Address</th>
-							<th>City</th>
-							<th>Neighborhood</th>
-							<th style="white-space: nowrap">Registered on</th>
-							<th style="white-space: nowrap">Updated on</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
+					<div style="margin-left: 15px; margin-bottom: 15px">
+						<button class="btn btn-outline-secondary" onclick="resetFilters()">Reset filters</button>
+					</div>
+					<table class="table" onsubmit="reload()">
+						<thead>
+							<tr>
+								<th style="white-space: nowrap">Id</th>
+								<th style="white-space: nowrap">Price</th>
+								<th>Address</th>
+								<th>City</th>
+								<th>Neighborhood</th>
+								<th style="white-space: nowrap">Registered on</th>
+								<th style="white-space: nowrap">Updated on</th>
+							</tr>
+						</thead>
+						<tbody> <!-- vazio para inserir dados com JavaScript -->
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 
 	<footer>
@@ -267,8 +273,7 @@
 		xhttp.open("GET", "http://localhost:8080/houses", true);
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send();
-	}	
-	
+	}		
 	showTable(); // chama a funcao showTable()
 	
 	function updateTable() {		
@@ -278,6 +283,12 @@
 		table.replaceChild(new_tbody, old_tbody);
 		showTable();
 	}	
+	
+	function resetFilters() {	
+		document.querySelector("#houseSearchById > form").reset();
+		document.querySelector("#houseSearchByPrice > form").reset();
+		updateTable();
+	}
 	
 </script>
 
