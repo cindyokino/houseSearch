@@ -9,6 +9,7 @@
 	crossorigin="anonymous">
 <title>House Search Application</title>
 <link rel="stylesheet" type="text/css" href="registerForm.css">
+<script src="https://kit.fontawesome.com/c20548da5e.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -102,7 +103,7 @@
 					</div>
 
 					<div id="houseSearchByPrice"
-						class="d-flex justify-content-center col-6 ">
+						class="d-flex justify-content-center col-6">
 						<form onsubmit="return false">
 							<div id="searchPrice">
 								<h4>Search by price:</h4>
@@ -115,8 +116,7 @@
 						</form>
 					</div>
 					<div style="margin-left: 15px; margin-bottom: 15px">
-						<button class="btn btn-outline-secondary" onclick="resetFilters()">Reset
-							filters</button>
+						<button class="btn btn-outline-secondary" onclick="resetFilters()">Reset filters</button>
 					</div>
 					<table class="table" onsubmit="reload()">
 						<thead>
@@ -128,6 +128,7 @@
 								<th>Neighborhood</th>
 								<th style="white-space: nowrap">Registered on</th>
 								<th style="white-space: nowrap">Updated on</th>
+								<th style="white-space: nowrap"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -272,6 +273,8 @@
 		document.querySelector("#houseSearchById > form").reset();
 		document.querySelector("#houseSearchByPrice > form").reset();
 		updateTable();
+		
+		document.querySelector("body").click();
 	}
 	
 	function populateTable(housesList) {
@@ -291,6 +294,7 @@
 			var cellNeighborhood = row.insertCell(4);
 			var cellRegisteredOn = row.insertCell(5);
 			var cellUpdatedOn = row.insertCell(6);
+			var cellActions = row.insertCell(7);
 		
 			cellId.innerText = house.id;
 			cellPrice.innerText = house.price;
@@ -298,9 +302,37 @@
 			cellNeighborhood.innerText = house.neighborhood;
 			cellCity.innerText = house.city;
 			cellRegisteredOn.innerText = house.registeredOn;
-			cellUpdatedOn.innerText = house.updatedOn;				
+			cellUpdatedOn.innerText = house.updatedOn;			
+			
+			let divButtons = cellActions.appendChild(document.createElement("div"));
+			divButtons.className = "row";
+						
+			
+			
+			let deleteButtonDiv = divButtons.appendChild(document.createElement("div"));
+			let deleteButton = deleteButtonDiv.appendChild(document.createElement("a"));
+			deleteButtonDiv.className = "d-flex justify-content-center col-6";
+			deleteButton.className = "fas fa-times";
+			deleteButton.idName = "deleteButton"; 
+			deleteButton.style = "cursor: pointer";
+			deleteButton.addEventListener("click", function() {deleteHouse(house.id)});		
 		});				
-	}	
+	}
+	
+	function deleteHouse(houseId) {		
+		console.log(houseId);
+		
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 204) {
+				updateTable();
+			}
+		};
+		xhttp.open("DELETE", "http://localhost:8080/houses/" + houseId, true);
+		xhttp.setRequestHeader("Content-type", "application/json");
+		xhttp.send();
+	}
+	
 	
 </script>
 
