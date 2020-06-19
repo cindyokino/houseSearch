@@ -78,18 +78,19 @@
 		</div>
 		<br />
 		<div id="loading" hidden="true">
-			<img src="loading.gif" width="150px"/><br />
+			<img src="loading.gif" width="150px" /><br />
 		</div>
 
 		<div class="row">
 			<div id="houseTable" class="col-12 section table-responsive">
 				<h1>Houses</h1>
-
 				<div class="row">
 					<div class="d-flex justify-content-center col-2">
 						<img src="search.png" width="80px">
 					</div>
-					<div class="d-flex justify-content-center col-4 " id="houseSearchById">
+
+					<div id="houseSearchById"
+						class="d-flex justify-content-center col-4">
 						<form onsubmit="return false">
 							<div class="searchById">
 								<h4>Search by id:</h4>
@@ -100,7 +101,8 @@
 						</form>
 					</div>
 
-					<div class="d-flex justify-content-center col-6 " id="houseSearchByPrice">
+					<div id="houseSearchByPrice"
+						class="d-flex justify-content-center col-6 ">
 						<form onsubmit="return false">
 							<div id="searchPrice">
 								<h4>Search by price:</h4>
@@ -113,7 +115,8 @@
 						</form>
 					</div>
 					<div style="margin-left: 15px; margin-bottom: 15px">
-						<button class="btn btn-outline-secondary" onclick="resetFilters()">Reset filters</button>
+						<button class="btn btn-outline-secondary" onclick="resetFilters()">Reset
+							filters</button>
 					</div>
 					<table class="table" onsubmit="reload()">
 						<thead>
@@ -127,7 +130,8 @@
 								<th style="white-space: nowrap">Updated on</th>
 							</tr>
 						</thead>
-						<tbody> <!-- vazio para inserir dados com JavaScript -->
+						<tbody>
+							<!-- vazio para inserir dados com JavaScript -->
 						</tbody>
 					</table>
 				</div>
@@ -152,8 +156,10 @@
 		let xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
+				let housesList  = new Array();
+				housesList.push(JSON.parse(this.responseText)); 
 				document.getElementById("loading").hidden = true;
-				console.log(this.responseText);
+				populateTable(housesList);
 			}
 		};
 		xhttp.open("GET", "http://localhost:8080/houses/" + id, true); //...abrir uma url e fazer uma requisicao.
@@ -162,7 +168,6 @@
 		document.getElementById("loading").hidden = false;
 		
 		document.querySelector("#houseSearchById > form").reset();
-// 		updateTable();
 	}
 	
 	function findByPrice() {
@@ -183,15 +188,14 @@
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				document.getElementById("loading").hidden = true;
-				console.log(this.responseText);
+				let housesList  = JSON.parse(this.responseText);
+				populateTable(housesList);
 			}
 		};
 		xhttp.open("GET", target, true); //...abrir uma url e fazer uma requisicao.
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send();
 		document.getElementById("loading").hidden = false;
-		
-// 		updateTable();
 	}
 
 	function showForm() {
@@ -247,27 +251,7 @@
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				let housesList  = JSON.parse(this.responseText);
-
-				var tbody = document.querySelector("table > tbody"); // > pega o tbody que e o childOf table
-				
-				housesList.forEach(house => {	
-					var row = tbody.insertRow(-1);
-					var cellId = row.insertCell(0);
-					var cellPrice = row.insertCell(1);
-					var cellAddress = row.insertCell(2);
-					var cellCity = row.insertCell(3);
-					var cellNeighborhood = row.insertCell(4);
-					var cellRegisteredOn = row.insertCell(5);
-					var cellUpdatedOn = row.insertCell(6);
-				
-					cellId.innerText = house.id;
-					cellPrice.innerText = house.price;
-					cellAddress.innerText = house.address;
-					cellNeighborhood.innerText = house.neighborhood;
-					cellCity.innerText = house.city;
-					cellRegisteredOn.innerText = house.registeredOn;
-					cellUpdatedOn.innerText = house.updatedOn;				
-				});				
+				populateTable(housesList);				
 			}
 		};
 		xhttp.open("GET", "http://localhost:8080/houses", true);
@@ -289,6 +273,34 @@
 		document.querySelector("#houseSearchByPrice > form").reset();
 		updateTable();
 	}
+	
+	function populateTable(housesList) {
+		var table = document.querySelector("table");
+		var old_tbody = document.querySelector("table > tbody");
+		var new_tbody = document.createElement('tbody');
+		table.replaceChild(new_tbody, old_tbody);
+		
+		var tbody = document.querySelector("table > tbody"); // > pega o tbody que e o childOf table
+		
+		housesList.forEach(house => {	
+			var row = tbody.insertRow(-1);
+			var cellId = row.insertCell(0);
+			var cellPrice = row.insertCell(1);
+			var cellAddress = row.insertCell(2);
+			var cellCity = row.insertCell(3);
+			var cellNeighborhood = row.insertCell(4);
+			var cellRegisteredOn = row.insertCell(5);
+			var cellUpdatedOn = row.insertCell(6);
+		
+			cellId.innerText = house.id;
+			cellPrice.innerText = house.price;
+			cellAddress.innerText = house.address;
+			cellNeighborhood.innerText = house.neighborhood;
+			cellCity.innerText = house.city;
+			cellRegisteredOn.innerText = house.registeredOn;
+			cellUpdatedOn.innerText = house.updatedOn;				
+		});				
+	}	
 	
 </script>
 
