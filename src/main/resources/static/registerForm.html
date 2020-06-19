@@ -307,7 +307,12 @@
 			let divButtons = cellActions.appendChild(document.createElement("div"));
 			divButtons.className = "row";
 						
-			
+			let editButtonDiv = divButtons.appendChild(document.createElement("div"));
+			let editButton = editButtonDiv.appendChild(document.createElement("a"));
+			editButtonDiv.className = "d-flex justify-content-center col-6";
+			editButton.className = "fas fa-pencil-alt";
+			editButton.style = "cursor: pointer";
+			editButton.addEventListener("click", function(){alert("hi")}); //CRIAR FUNCAO EDIT
 			
 			let deleteButtonDiv = divButtons.appendChild(document.createElement("div"));
 			let deleteButton = deleteButtonDiv.appendChild(document.createElement("a"));
