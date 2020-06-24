@@ -232,7 +232,7 @@
 		}
 
 		var xhttp = new XMLHttpRequest(); // XMLHttpRequest torna o envio de requisicoes HTTP muito facil.
-		xhttp.onreadystatechange = function() { // Basta criar uma inst�ncia do objeto...
+		xhttp.onreadystatechange = function() { // Basta criar uma instancia do objeto...
 			if (this.readyState == 4 && this.status == 200) {
 				document.getElementById("loading").hidden = true;
 				updateTable();
@@ -312,7 +312,7 @@
 			editButtonDiv.className = "d-flex justify-content-center col-6";
 			editButton.className = "fas fa-pencil-alt";
 			editButton.style = "cursor: pointer";
-			editButton.addEventListener("click", function(){alert("hi")}); //CRIAR FUNCAO EDIT
+			editButton.addEventListener("click", function() {fillEditForm(house)});
 			
 			let deleteButtonDiv = divButtons.appendChild(document.createElement("div"));
 			let deleteButton = deleteButtonDiv.appendChild(document.createElement("a"));
@@ -324,6 +324,31 @@
 		});				
 	}
 	
+	function fillEditForm(house) {
+		
+		let houseIdInput = document.getElementById("houseId");
+		houseIdInput.value = house.id;
+		
+		let housePriceInput = document.getElementById("housePrice");
+		housePriceInput.value = house.price;
+		
+		let houseAddressInput = document.getElementById("houseAddress");
+		houseAddressInput.value = house.address;
+		
+		let houseNeighborhoodInput = document.getElementById("houseNeighborhood");
+		houseNeighborhoodInput.value = house.neighborhood;		
+		
+		let houseCityInput = document.getElementById("houseCity");
+		houseCityInput.value = house.city;		
+		
+		topFunction();
+	}
+		
+	function topFunction() { // When the user clicks on the button, scroll to the top of the document
+		document.body.scrollTop = 0; // For Safari
+		document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+	}
+		
 	function deleteHouse(houseId) {		
 		console.log(houseId);
 		
