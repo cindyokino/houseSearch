@@ -1,9 +1,13 @@
 package com.cindyokino.houseSearch.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -12,24 +16,24 @@ public class House {
 	
 	@Id
 	private Long id;
-	private Long price;
 	private String address;
 	private String city;
 	private String neighborhood;
 	private LocalDate registeredOn;
-	private LocalDate updatedOn;
+	
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	@JoinColumn(name = "houseId")
+	private List<PriceHistory> priceHistory;
 	
 	public House() {		
 	}
 
-	public House(Long id, Long price, String address, String city, String neighborhood, LocalDate registeredOn,LocalDate updatedOn) {
+	public House(Long id, String address, String city, String neighborhood, LocalDate registeredOn) {
 		this.id = id;
-		this.price = price;
 		this.address = address;
 		this.city = city;
 		this.neighborhood = neighborhood;
 		this.registeredOn = registeredOn;
-		this.updatedOn = updatedOn;
 	}
 
 	public Long getId() {
@@ -38,14 +42,6 @@ public class House {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getPrice() {
-		return price;
-	}
-
-	public void setPrice(Long price) {
-		this.price = price;
 	}
 
 	public String getAddress() {
@@ -80,14 +76,6 @@ public class House {
 		this.registeredOn = registeredOn;
 	}
 
-	public LocalDate getUpdatedOn() {
-		return updatedOn;
-	}
-
-	public void setUpdatedOn(LocalDate updatedOn) {
-		this.updatedOn = updatedOn;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -111,5 +99,13 @@ public class House {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public List<PriceHistory> getPriceHistory() {
+		return priceHistory;
+	}
+
+	public void setPriceHistory(List<PriceHistory> priceHistory) {
+		this.priceHistory = priceHistory;
 	}
 }

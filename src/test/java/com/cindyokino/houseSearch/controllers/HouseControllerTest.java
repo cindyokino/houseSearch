@@ -47,8 +47,8 @@ public class HouseControllerTest {
 
 	@Test
 	public void findAllTest_success() throws Exception {
-		House house1 = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), LocalDate.now());
-		House house2 = new House(2L, 450000L, "TestAddress2", "TestCity2", "TestNeighborhood2", LocalDate.now(), LocalDate.now());
+		House house1 = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now());
+		House house2 = new House(2L, "TestAddress2", "TestCity2", "TestNeighborhood2", LocalDate.now());
 
 		List<House> expectedHouses = new ArrayList<>(Arrays.asList(house1, house2));
 
@@ -70,7 +70,7 @@ public class HouseControllerTest {
 
 	@Test
 	public void findByIdTest_success() throws Exception {
-		House expectedHouse = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), LocalDate.now());
+		House expectedHouse = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now());
 
 		when(houseServiceMock.findById(eq(1L))).thenReturn(expectedHouse);
 
@@ -86,8 +86,8 @@ public class HouseControllerTest {
 
 	@Test
 	public void findByPriceRangeTest_success() throws UnsupportedEncodingException, Exception {
-		House house1 = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), LocalDate.now());
-		House house2 = new House(2L, 450000L, "TestAddress2", "TestCity2", "TestNeighborhood2", LocalDate.now(), LocalDate.now());
+		House house1 = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now());
+		House house2 = new House(2L, "TestAddress2", "TestCity2", "TestNeighborhood2", LocalDate.now());
 
 		List<House> expectedHouses = new ArrayList<>(Arrays.asList(house1, house2));
 
@@ -106,7 +106,7 @@ public class HouseControllerTest {
 
 	@Test
 	public void insertHouseTest_success() throws Exception {
-		House house = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), LocalDate.now());
+		House house = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now());
 
 		List<House> expectedHouses = new ArrayList<>(Collections.singletonList(house));
 
@@ -132,7 +132,7 @@ public class HouseControllerTest {
 
 	@Test
 	public void updateHouseTest_success() throws Exception {
-		House expectedHouse = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), LocalDate.now());
+		House expectedHouse = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now());
 
 		String expectedHouseJson = objectMapper.writeValueAsString(expectedHouse);
 

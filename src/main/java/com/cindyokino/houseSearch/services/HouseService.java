@@ -31,7 +31,6 @@ public class HouseService {
 			optionalFoundHouse.ifPresentOrElse(
 					foundHouse -> h.setRegisteredOn(foundHouse.getRegisteredOn()), 
 					() -> h.setRegisteredOn(LocalDate.now()));
-			h.setUpdatedOn(LocalDate.now());
 		});
 		return houseRepository.saveAll(houses);
 	}
@@ -43,7 +42,6 @@ public class HouseService {
 			throw new IllegalArgumentException("House to update not found");
 		}
 		house.setRegisteredOn(houseInDatabase.getRegisteredOn());
-		house.setUpdatedOn(LocalDate.now());
 		return houseRepository.save(house);
 	}
 
