@@ -102,6 +102,9 @@ Response: 200 ok
 }
 
 ## Sprint 2
+### Refactor tests
+
+## Sprint 3
 ### Create history of house price changes
 #### * To be defined
 
