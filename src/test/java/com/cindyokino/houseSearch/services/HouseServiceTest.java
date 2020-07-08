@@ -33,10 +33,8 @@ public class HouseServiceTest {
 
 	@Test
 	public void findAllTest_success() {
-		House house1 = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(),
-				LocalDate.now());
-		House house2 = new House(2L, 450000L, "TestAddress2", "TestCity2", "TestNeighborhood2", LocalDate.now(),
-				LocalDate.now());
+		House house1 = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now());
+		House house2 = new House(2L, "TestAddress2", "TestCity2", "TestNeighborhood2", LocalDate.now());
 
 		List<House> expectedHouses = new ArrayList<>(Arrays.asList(house1, house2));
 
@@ -49,8 +47,7 @@ public class HouseServiceTest {
 
 	@Test
 	public void findByIdTest_success() {
-		Optional<House> expectedHouse = Optional.of(new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(),
-				LocalDate.now()));
+		Optional<House> expectedHouse = Optional.of(new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now()));
 		
 		Mockito.when(houseRepositoryMock.findById(1L)).thenReturn(expectedHouse);
 		
@@ -61,7 +58,7 @@ public class HouseServiceTest {
 	
 	@Test
 	public void insertHouseTest_forExistingId_keepRegisteredOn() {
-		House house = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now().minusDays(1), LocalDate.now().minusDays(1));
+		House house = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now().minusDays(1));
 		List<House> inputList = new ArrayList<>();		
 		inputList.add(house);
 		
@@ -74,12 +71,11 @@ public class HouseServiceTest {
 		
 		MatcherAssert.assertThat(actualHouseList.size(), Matchers.is(1));	
 		MatcherAssert.assertThat(actualHouseList.get(0).getRegisteredOn(), Matchers.is(house.getRegisteredOn()));	
-		MatcherAssert.assertThat(actualHouseList.get(0).getUpdatedOn(), Matchers.is(LocalDate.now()));	
 	}
 	
 	@Test
 	public void insertHouseTest_forNewId() {
-		House house = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), LocalDate.now());
+		House house = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now());
 
 		List<House> inputList = new ArrayList<>(Arrays.asList(house));
 		
@@ -90,12 +86,11 @@ public class HouseServiceTest {
 		
 		MatcherAssert.assertThat(actualHouseList.size(), Matchers.is(1));
 		MatcherAssert.assertThat(actualHouseList.get(0).getRegisteredOn(), Matchers.is(house.getRegisteredOn()));
-		MatcherAssert.assertThat(actualHouseList.get(0).getUpdatedOn(), Matchers.is(house.getUpdatedOn()));
 	}
 	
 	@Test
 	public void updateHouseTest_byId() {
-		House house = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now().minusDays(1), LocalDate.now().minusDays(1));
+		House house = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now().minusDays(1));
 	
 		Optional<House> expectedHouse = Optional.of(house);
 		
@@ -105,12 +100,11 @@ public class HouseServiceTest {
 		House actualHouse = houseService.update(house);
 		
 		MatcherAssert.assertThat(actualHouse.getRegisteredOn(), Matchers.is(expectedHouse.get().getRegisteredOn()));
-		MatcherAssert.assertThat(actualHouse.getUpdatedOn(), Matchers.is(LocalDate.now()));
 	}
 	
 	@Test
 	public void updateHouseTest_forIdNull_checkForException() {
-		House house = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), LocalDate.now());
+		House house = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now());
 
 		Mockito.when(houseRepositoryMock.findById(house.getId())).thenReturn(Optional.empty());
 			
@@ -121,7 +115,7 @@ public class HouseServiceTest {
 	
 	@Test
 	public void deleteHouseTest_byId() {
-		House house = new House(1L, 150000L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now().minusDays(1), LocalDate.now().minusDays(1));
+		House house = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now().minusDays(1));
 			
 		Optional<House> expectedHouse = Optional.of(house);
 		
