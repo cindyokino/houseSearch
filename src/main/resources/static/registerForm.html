@@ -161,7 +161,7 @@
 				populateTable(housesList);
 			}
 		};
-		xhttp.open("GET", "http://localhost:80/houses/" + id, true); //...abrir uma url e fazer uma requisicao.
+		xhttp.open("GET", "https://house-search-app.herokuapp.com/houses/" + id, true); //...abrir uma url e fazer uma requisicao.
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send();
 		document.getElementById("loading").hidden = false;
@@ -173,7 +173,7 @@
 		let minPrice = document.getElementById("minPrice").value;
 		let maxPrice = document.getElementById("maxPrice").value;
 		
-		const target = new URL('http://localhost:80/houses');
+		const target = new URL('https://house-search-app.herokuapp.com/houses');
 		const params = new URLSearchParams();
 		if(minPrice != "") {
 			params.set('minPrice', minPrice);
@@ -236,7 +236,7 @@
 				updateTable();
 			}
 		};
-		xhttp.open("POST", "http://localhost:80/houses", true); //...abrir uma url e enviar uma requisicao.
+		xhttp.open("POST", "https://house-search-app.herokuapp.com/houses", true); //...abrir uma url e enviar uma requisicao.
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send(requestBody);
 		document.getElementById("loading").hidden = false;
@@ -253,7 +253,7 @@
 				populateTable(housesList);				
 			}
 		};
-		xhttp.open("GET", "http://localhost:80/houses", true);
+		xhttp.open("GET", "https://house-search-app.herokuapp.com/houses", true);
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send();
 	}		
@@ -356,7 +356,7 @@
 				updateTable();
 			}
 		};
-		xhttp.open("DELETE", "http://localhost:80/houses/" + houseId, true);
+		xhttp.open("DELETE", "https://house-search-app.herokuapp.com/houses/" + houseId, true);
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send();
 	}
