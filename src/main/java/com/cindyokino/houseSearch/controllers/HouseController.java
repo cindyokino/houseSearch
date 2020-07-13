@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cindyokino.houseSearch.entities.House;
+import com.cindyokino.houseSearch.entities.HouseDto;
 import com.cindyokino.houseSearch.services.HouseService;
 
 @RestController
@@ -41,8 +42,8 @@ public class HouseController {
 	}
 
 	@PostMapping
-	public ResponseEntity<List<House>> insertHouse(@RequestBody List<House> houses) {
-		houses = houseService.insert(houses);
+	public ResponseEntity<List<House>> insertHouse(@RequestBody List<HouseDto> houseDtos) {
+		List<House> houses = houseService.insert(houseDtos);
 		return ResponseEntity.ok(houses);
 	}
 
