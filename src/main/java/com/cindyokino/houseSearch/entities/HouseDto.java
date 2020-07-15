@@ -11,5 +11,4 @@ public class HouseDto {
 	private String city;
 	private String neighborhood;
 	private Long price;
-
 }
