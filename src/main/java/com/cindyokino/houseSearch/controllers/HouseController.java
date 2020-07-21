@@ -48,10 +48,10 @@ public class HouseController {
 	}
 
 	@PutMapping
-	public ResponseEntity<House> updateHouse(@RequestBody House house) {
+	public ResponseEntity<House> updateHouse(@RequestBody HouseDto houseDto) {
 		House updatedHouse;
 		try {
-			updatedHouse = houseService.update(house);
+			updatedHouse = houseService.update(houseDto);
 		}catch(IllegalArgumentException exception) {
 			return ResponseEntity.badRequest().build();
 		}
