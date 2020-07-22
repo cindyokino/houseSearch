@@ -41,7 +41,7 @@ public class HouseService {
 	public List<House> insert(List<HouseDto> houseDtos) {
 		return houseDtos.stream().map(houseDto -> {
 			House house = mapToHouse(houseDto);
-			return this.insert(house, houseDto.getPrice());
+			return this.save(house, houseDto.getPrice());
 		}).collect(Collectors.toList());
 	}
 	
@@ -77,7 +77,7 @@ public class HouseService {
 		return house;
 	}
 
-	private House insert(House house, Long price) {
+	private House save(House house, Long price) {
 		Optional<House> optionalFoundHouse = houseRepository.findById(house.getId());
 		if (optionalFoundHouse.isPresent()) {
 			House houseInDb = optionalFoundHouse.get();
@@ -106,7 +106,9 @@ public class HouseService {
 			houseInDb.getPriceHistory().stream()
 	//			.sorted(Comparator.comparing(PriceHistory::getUpdatedOn).reversed())
 					.sorted(Comparator.comparing(pricehist -> pricehist.getUpdatedOn(), Comparator.reverseOrder()))
-					.findFirst().filter(priceHist -> !priceHist.getPrice().equals(price)).ifPresent(priceHist -> {
+					.findFirst()
+					.filter(priceHist -> !priceHist.getPrice().equals(price))
+					.ifPresent(priceHist -> {
 						PriceHistory priceHistory = new PriceHistory();
 						priceHistory.setHouse(houseToUpdate);
 						priceHistory.setPrice(price);
