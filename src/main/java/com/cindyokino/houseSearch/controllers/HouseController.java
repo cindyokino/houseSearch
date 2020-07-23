@@ -35,9 +35,11 @@ public class HouseController {
 	
 	@GetMapping
 	public ResponseEntity<List<House>> findHouses(
-			@RequestParam(value = "minPrice", defaultValue = "") Long minPrice,
-			@RequestParam(value = "maxPrice", defaultValue = "") Long maxPrice) {		
+			@RequestParam(value = "minPrice", required = false) Long minPrice,
+			@RequestParam(value = "maxPrice", required = false) Long maxPrice) {	
+		
 		List<House> houses = houseService.findAll(minPrice, maxPrice);
+
 		return ResponseEntity.ok().body(houses);
 	}
 
