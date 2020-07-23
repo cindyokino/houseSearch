@@ -31,7 +31,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.cindyokino.houseSearch.entities.House;
 import com.cindyokino.houseSearch.entities.HouseDto;
-import com.cindyokino.houseSearch.entities.PriceHistory;
 import com.cindyokino.houseSearch.services.HouseService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -137,11 +136,12 @@ public class HouseControllerTest {
 
 	@Test
 	public void updateHouseTest_success() throws Exception {
-		House expectedHouse = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), null);
+		HouseDto houseDto = new HouseDto(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", 409000L);
+		House houseToUpdate = mapToHouse(houseDto);
 
-		String expectedHouseJson = objectMapper.writeValueAsString(expectedHouse);
+		String expectedHouseJson = objectMapper.writeValueAsString(houseToUpdate);
 
-		when(houseServiceMock.update(expectedHouse)).thenReturn(expectedHouse);
+		when(houseServiceMock.update(Mockito.any())).thenReturn(houseToUpdate);
 
 		String body = this.mockMvc
 				.perform(put("/houses").contentType(MediaType.APPLICATION_JSON)
@@ -151,9 +151,9 @@ public class HouseControllerTest {
 
 		House actualHouse = objectMapper.readValue(body, House.class);
 
-		assertThat(actualHouse, is(expectedHouse));
+		assertThat(actualHouse, is(houseToUpdate));
 	}
-
+	
 	@Test
 	public void deleteHouseTest_success() throws Exception {
 
