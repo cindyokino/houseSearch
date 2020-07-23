@@ -44,7 +44,7 @@ public class HouseServiceTest {
 
 		List<House> expectedHouses = new ArrayList<>(Arrays.asList(house1, house2));
 
-		Mockito.when(houseRepositoryMock.customMethod(null, null)).thenReturn(expectedHouses);
+		Mockito.when(houseRepositoryMock.findHousesByPriceRange(null, null)).thenReturn(expectedHouses);
 
 		List<House> actualHouses = houseService.findAll(null, null);
 
