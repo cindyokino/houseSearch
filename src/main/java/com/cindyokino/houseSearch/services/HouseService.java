@@ -29,7 +29,7 @@ public class HouseService {
 	private PriceHistoryRepository priceHistoryRepository;
 
 	public List<House> findAll(Long minPrice, Long maxPrice) {
-		return houseRepository.customMethod(minPrice, maxPrice);
+		return houseRepository.findHousesByPriceRange(minPrice, maxPrice);
 	}
 
 	public House findById(Long id) {
