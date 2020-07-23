@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -29,6 +30,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.cindyokino.houseSearch.entities.House;
+import com.cindyokino.houseSearch.entities.HouseDto;
+import com.cindyokino.houseSearch.entities.PriceHistory;
 import com.cindyokino.houseSearch.services.HouseService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,8 +50,8 @@ public class HouseControllerTest {
 
 	@Test
 	public void findAllTest_success() throws Exception {
-		House house1 = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now());
-		House house2 = new House(2L, "TestAddress2", "TestCity2", "TestNeighborhood2", LocalDate.now());
+		House house1 = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), null);
+		House house2 = new House(2L, "TestAddress2", "TestCity2", "TestNeighborhood2", LocalDate.now(), null);
 
 		List<House> expectedHouses = new ArrayList<>(Arrays.asList(house1, house2));
 
@@ -70,7 +73,7 @@ public class HouseControllerTest {
 
 	@Test
 	public void findByIdTest_success() throws Exception {
-		House expectedHouse = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now());
+		House expectedHouse = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), null);
 
 		when(houseServiceMock.findById(eq(1L))).thenReturn(expectedHouse);
 
@@ -86,8 +89,8 @@ public class HouseControllerTest {
 
 	@Test
 	public void findByPriceRangeTest_success() throws UnsupportedEncodingException, Exception {
-		House house1 = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now());
-		House house2 = new House(2L, "TestAddress2", "TestCity2", "TestNeighborhood2", LocalDate.now());
+		House house1 = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), null);
+		House house2 = new House(2L, "TestAddress2", "TestCity2", "TestNeighborhood2", LocalDate.now(), null);
 
 		List<House> expectedHouses = new ArrayList<>(Arrays.asList(house1, house2));
 
@@ -106,16 +109,18 @@ public class HouseControllerTest {
 
 	@Test
 	public void insertHouseTest_success() throws Exception {
-		House house = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now());
+		HouseDto houseDto = new HouseDto(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", 409000L);
+		House newHouse = mapToHouse(houseDto);
+		
+		List<HouseDto> housesDtoList = new ArrayList<>(Collections.singletonList(houseDto));
+		List<House> expectedHouses = new ArrayList<>(Collections.singletonList(newHouse));
 
-		List<House> expectedHouses = new ArrayList<>(Collections.singletonList(house));
-
-		// writeValueAsString transforma um objeto java em uma string json para a comunicacao do sistema 
-		// externo(mockMvc, onde faco chamadas REST) e interno
-		String expectedHousesJson = objectMapper.writeValueAsString(expectedHouses); 
+		/* writeValueAsString transforma um objeto java em uma string json para a comunicacao do sistema
+		 externo(mockMvc, onde faco chamadas REST) e interno */
+		String expectedHousesJson = objectMapper.writeValueAsString(housesDtoList); 
 
 		// when(chamada_de_metodo).thenReturn(valor_de_retorno)
-		when(houseServiceMock.insert(expectedHouses)).thenReturn(expectedHouses);
+		when(houseServiceMock.insert(Mockito.any())).thenReturn(expectedHouses);
 
 		String body = this.mockMvc.perform(post("/houses") // perform faz a chamada REST (post no caso)
 				.contentType(MediaType.APPLICATION_JSON) // parametros adicionais na chamada
@@ -132,7 +137,7 @@ public class HouseControllerTest {
 
 	@Test
 	public void updateHouseTest_success() throws Exception {
-		House expectedHouse = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now());
+		House expectedHouse = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), null);
 
 		String expectedHouseJson = objectMapper.writeValueAsString(expectedHouse);
 
@@ -155,5 +160,15 @@ public class HouseControllerTest {
 		this.mockMvc.perform(delete("/houses/1")).andExpect(status().isNoContent());
 
 		verify(houseServiceMock).deleteById(eq(1L));
+	}
+	
+	private House mapToHouse(HouseDto dto) {
+		House house = new House();
+		house.setAddress(dto.getAddress());
+		house.setCity(dto.getCity());
+		house.setNeighborhood(dto.getNeighborhood());
+		house.setId(dto.getId());
+		
+		return house;
 	}
 }
