@@ -7,13 +7,14 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import com.cindyokino.houseSearch.entities.House;
 import com.cindyokino.houseSearch.entities.PriceHistory;
 import com.cindyokino.houseSearch.repositories.HouseRepository;
 import com.cindyokino.houseSearch.repositories.PriceHistoryRepository;
 
-
+@Profile("dev")
 @Configuration
 public class TestConfig implements CommandLineRunner { // CommandLineRunner inicializa um codigo junto com a inicializacao do programa
 	
