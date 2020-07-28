@@ -16,10 +16,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -53,9 +54,11 @@ public class HousesIntegrationTest {
 	
 	@Autowired
 	private HouseService houseService;
-
-	@Test
 	
+	@Autowired
+	private EntityManager entityManager;
+	
+	@Test
 	public void findAllTest_success() throws Exception {
 		HouseDto houseDto1 = new HouseDto(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", null);
 		HouseDto houseDto2 = new HouseDto(2L, "TestAddress2", "TestCity2", "TestNeighborhood2", null);
@@ -94,7 +97,6 @@ public class HousesIntegrationTest {
 		assertThat(actualHouse, Matchers.is(expectedHouse));
 	}
 
-	@Disabled // Fix this test !
 	public void findByPriceRangeTest_success() throws UnsupportedEncodingException, Exception {
 		House house1 = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), null);
 		House house2 = new House(2L, "TestAddress2", "TestCity2", "TestNeighborhood2", LocalDate.now(), null);
@@ -131,29 +133,50 @@ public class HousesIntegrationTest {
 		List<House> actualHouses = objectMapper.readValue(body, new TypeReference<List<House>>() { 
 		});
 
-		assertThat(actualHouses, is(expectedHouses));
+		assertThat(actualHouses, Matchers.is(expectedHouses));
 	}
 
 	@Test
-	public void updateHouseTest_success() throws Exception {
-		House emptyHouse = new House();
-		emptyHouse.setId(1L);
-		
-		houseRepository.save(emptyHouse);
-		
-		House expectedHouse = new House(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", LocalDate.now(), null);
+	public void updateHouseTest_success() throws Exception {		
+		HouseDto houseToUpdate = new HouseDto(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", 500000L);
+		houseService.insert(Collections.singletonList(houseToUpdate));
 
-		String expectedHouseJson = objectMapper.writeValueAsString(expectedHouse);
+		houseToUpdate.setPrice(600000L);
+		houseToUpdate.setCity("New City");
+		houseToUpdate.setNeighborhood("New Neighborhood");
+		houseToUpdate.setAddress("New Address");
+		String expectedHouseJson = objectMapper.writeValueAsString(houseToUpdate);
 
-		String body = this.mockMvc
-				.perform(put("/houses").contentType(MediaType.APPLICATION_JSON)
+		entityManager.flush();
+		entityManager.clear();
+		
+		String body = this.mockMvc.perform(put("/houses")
+				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(expectedHouseJson))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		House actualHouse = objectMapper.readValue(body, House.class);
 
-		assertThat(actualHouse, is(expectedHouse));
+		assertThat(actualHouse, CoreMatchers.notNullValue());
+		assertThat(actualHouse.getCity(), is(houseToUpdate.getCity()));
+		assertThat(actualHouse.getNeighborhood(), is(houseToUpdate.getNeighborhood()));
+		assertThat(actualHouse.getAddress(), is(houseToUpdate.getAddress()));
+		assertThat(actualHouse.getPriceHistory(), Matchers.hasSize(2));
+		
+	}
+	
+	@Test
+	public void updateHouseTest_houseNotFound() throws Exception {
+		HouseDto houseToUpdate = new HouseDto(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", 500000L);
+		
+		String expectedHouseJson = objectMapper.writeValueAsString(houseToUpdate);
+		
+		this.mockMvc.perform(put("/houses")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content(expectedHouseJson))
+				.andExpect(status().isBadRequest());
 	}
 
 	@Test
@@ -164,15 +187,5 @@ public class HousesIntegrationTest {
 		
 		this.mockMvc.perform(delete("/houses/1")).andExpect(status().isNoContent());
 
-	}
-	
-	private House mapToHouse(HouseDto dto) {
-		House house = new House();
-		house.setAddress(dto.getAddress());
-		house.setCity(dto.getCity());
-		house.setNeighborhood(dto.getNeighborhood());
-		house.setId(dto.getId());
-		
-		return house;
 	}
 }

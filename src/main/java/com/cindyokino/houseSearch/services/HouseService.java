@@ -104,7 +104,7 @@ public class HouseService {
 			houseToUpdate.setPriceHistory(houseInDb.getPriceHistory());
 	
 			houseInDb.getPriceHistory().stream()
-	//			.sorted(Comparator.comparing(PriceHistory::getUpdatedOn).reversed())
+	//				.sorted(Comparator.comparing(PriceHistory::getUpdatedOn).reversed()) // igual a linha abaixo
 					.sorted(Comparator.comparing(pricehist -> pricehist.getUpdatedOn(), Comparator.reverseOrder()))
 					.findFirst()
 					.filter(priceHist -> !priceHist.getPrice().equals(price))
