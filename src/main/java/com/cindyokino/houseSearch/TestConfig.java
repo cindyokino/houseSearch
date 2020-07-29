@@ -28,8 +28,8 @@ public class TestConfig implements CommandLineRunner { // CommandLineRunner inic
 	@Override
 	public void run(String... args) throws Exception {
 
-		House house1 = new House(14158660L, "2000, Rue Jean-Béliveau", "Longueuil (Le Vieux-Longueuil)", "Quartier Centre", LocalDate.now(), null);
-		House house2 = new House(13262772L, "864, boulevard Queen", "Saint-Lambert (Montérégie)", "New Neighborhood", LocalDate.now(), null);
+		House house1 = new House(14158660L, "851, Rue Jean-Béliveau", "Longueuil", "Quartier Centre", LocalDate.now().minusDays(2), null);
+		House house2 = new House(13262772L, "2000, Boulevard Queen", "Saint-Lambert", "New Neighborhood", LocalDate.now().minusDays(1), null);
 		
 		houseRepository.save(house1);
 		houseRepository.save(house2);
@@ -37,19 +37,19 @@ public class TestConfig implements CommandLineRunner { // CommandLineRunner inic
 		
 		PriceHistory priceHistory1 = PriceHistory.builder()
 				.house(house1)
-				.price(50L)
+				.price(500000L)
 				.updatedOn(LocalDateTime.now().minusDays(4))
 				.build();
 		
 		PriceHistory priceHistory2 = PriceHistory.builder()
 				.house(house2)
-				.price(80L)
+				.price(800000L)
 				.updatedOn(LocalDateTime.now().minusDays(7))
 				.build();
 		
 		PriceHistory priceHistory3 = PriceHistory.builder()
 				.house(house2)
-				.price(90L)
+				.price(900000L)
 				.updatedOn(LocalDateTime.now().minusDays(5))
 				.build();
 		

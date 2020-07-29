@@ -18,7 +18,7 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 <title>House Search Application</title>
-<link rel="stylesheet" type="text/css" href="registerForm.css">
+<link rel="stylesheet" type="text/css" href="index.css">
 <script src="https://kit.fontawesome.com/c20548da5e.js" crossorigin="anonymous"></script>
 </head>
 
@@ -126,6 +126,7 @@
 					<div style="margin-left: 15px; margin-bottom: 15px">
 						<button class="btn btn-outline-secondary" onclick="resetFilters()">Reset filters</button>
 					</div>
+					
 					<table class="table" onsubmit="reload()">
 						<thead>
 							<tr>
@@ -162,6 +163,8 @@
 
 
 <script language="javascript">
+// 	const baseUrl = "https://house-search-app.herokuapp.com";
+   	const baseUrl = "http://localhost:8080";
 
 	function findById() {
 		let id = document.getElementById("id").value;
@@ -175,7 +178,7 @@
 				populateTable(housesList);
 			}
 		};
-		xhttp.open("GET", "https://house-search-app.herokuapp.com/houses/" + id, true); //...abrir uma url e fazer uma requisicao.
+		xhttp.open("GET", baseUrl + "/houses/" + id, true); //...abrir uma url e fazer uma requisicao.
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send();
 		document.getElementById("loading").hidden = false;
@@ -187,7 +190,7 @@
 		let minPrice = document.getElementById("minPrice").value;
 		let maxPrice = document.getElementById("maxPrice").value;
 		
-		const target = new URL('https://house-search-app.herokuapp.com/houses');
+		const target = new URL(baseUrl + '/houses');
 		const params = new URLSearchParams();
 		if(minPrice != "") {
 			params.set('minPrice', minPrice);
@@ -250,7 +253,7 @@
 				updateTable();
 			}
 		};
-		xhttp.open("POST", "https://house-search-app.herokuapp.com/houses", true); //...abrir uma url e enviar uma requisicao.
+		xhttp.open("POST", baseUrl + "/houses", true); //...abrir uma url e enviar uma requisicao.
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send(requestBody);
 		document.getElementById("loading").hidden = false;
@@ -267,7 +270,7 @@
 				populateTable(housesList);				
 			}
 		};
-		xhttp.open("GET", "https://house-search-app.herokuapp.com/houses", true);
+		xhttp.open("GET", baseUrl + "/houses", true);
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send();
 	}		
@@ -308,13 +311,14 @@
 			var cellUpdatedOn = row.insertCell(6);
 			var cellActions = row.insertCell(7);
 		
+			var last = [house.priceHistory.length - 1];
 			cellId.innerText = house.id;
-			cellPrice.innerText = house.price;
+			cellPrice.innerText = house.priceHistory[last].price;
 			cellAddress.innerText = house.address;
 			cellNeighborhood.innerText = house.neighborhood;
 			cellCity.innerText = house.city;
-			cellRegisteredOn.innerText = house.registeredOn;
-			cellUpdatedOn.innerText = house.updatedOn;			
+			cellRegisteredOn.innerText = house.registeredOn;			
+			cellUpdatedOn.innerText = house.priceHistory[last].updatedOn;		
 			
 			let divButtons = cellActions.appendChild(document.createElement("div"));
 			divButtons.className = "row";
@@ -336,7 +340,7 @@
 		});				
 	}
 	
-	function fillEditForm(house) {
+	function fillEditForm(house, priceHistory) {
 		
 		let houseIdInput = document.getElementById("houseId");
 		houseIdInput.value = house.id;
@@ -370,7 +374,7 @@
 				updateTable();
 			}
 		};
-		xhttp.open("DELETE", "https://house-search-app.herokuapp.com/houses/" + houseId, true);
+		xhttp.open("DELETE", baseUrl + "/houses/" + houseId, true);
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send();
 	}
