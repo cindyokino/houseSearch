@@ -20,6 +20,7 @@
 <title>House Search Application</title>
 <link rel="stylesheet" type="text/css" href="index.css">
 <script src="https://kit.fontawesome.com/c20548da5e.js" crossorigin="anonymous"></script>
+<script src="https://momentjs.com/downloads/moment.min.js"></script>
 </head>
 
 <body>
@@ -312,13 +313,19 @@
 			var cellActions = row.insertCell(7);
 		
 			var last = [house.priceHistory.length - 1];
+			
 			cellId.innerText = house.id;
 			cellPrice.innerText = house.priceHistory[last].price;
 			cellAddress.innerText = house.address;
 			cellNeighborhood.innerText = house.neighborhood;
 			cellCity.innerText = house.city;
-			cellRegisteredOn.innerText = house.registeredOn;			
-			cellUpdatedOn.innerText = house.priceHistory[last].updatedOn;		
+			cellRegisteredOn.innerText = house.registeredOn;
+			
+			let updatedDate;
+			updatedDate = house.priceHistory[last].updatedOn;
+			updatedDate = moment(updatedDate);
+			updatedDate = updatedDate.format('YYYY-MM-DD');
+			cellUpdatedOn.innerText = updatedDate;	
 			
 			let divButtons = cellActions.appendChild(document.createElement("div"));
 			divButtons.className = "row";
