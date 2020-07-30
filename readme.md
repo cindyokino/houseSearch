@@ -110,6 +110,9 @@ Response: 200 ok
 ### Refactor tests
 
 ## Sprint 3
-### Create history of house price changes
-#### * To be defined
+### Create price history 
 
+## Sprint 4
+### Final adjustments
+#### * Add modal to show the price history of a house
+#### * Deploy at Heroku
