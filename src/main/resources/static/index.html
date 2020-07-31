@@ -2,29 +2,57 @@
 <html>
 
 <head>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-172337920-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-172337920-1"></script>
+	
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+		gtag('config', 'UA-172337920-1');
+	</script>
 
-  gtag('config', 'UA-172337920-1');
-</script>
+	<link rel="icon" type="image/png" href="houseSearchFavicon.png">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<script src="https://kit.fontawesome.com/c20548da5e.js" crossorigin="anonymous"></script>
+	<script src="https://momentjs.com/downloads/moment.min.js"></script><script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<link rel="icon" type="image/png" href="houseSearchFavicon.png">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-<title>House Search Application</title>
-<link rel="stylesheet" type="text/css" href="index.css">
-<script src="https://kit.fontawesome.com/c20548da5e.js" crossorigin="anonymous"></script>
-<script src="https://momentjs.com/downloads/moment.min.js"></script>
+	<title>House Search Application</title>
 </head>
 
 <body>
 
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+		Launch demo modal
+	</button>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					...
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Register Forms -->
 	<div class="container">
 		<div class="row">
 			<div class="col-12 section">
@@ -32,47 +60,47 @@
 
 				<div class="d-flex justify-content-center" id="radioButtons">
 					<div class="radio" style="margin-right: 50px">
-						<label for="oneHouse"> 
-						<input id="oneHouse" onclick="showForm()" name="add" type="radio" checked> Add one house
+						<label for="oneHouse">
+							<input id="oneHouse" onclick="showForm()" name="add" type="radio" checked> Add one house
 						</label>
 					</div>
 					<div class="radio">
-						<label for="multipleHouses"> 
+						<label for="multipleHouses">
 							<input id="multipleHouses" onclick="showForm()" name="add" type="radio"> Add multiple houses
 						</label>
 					</div>
 				</div>
 
+				<!-- One House Form -->
 				<div id="oneHouseForm">
 					<form onsubmit="return false">
 						<h4>Add one house:</h4>
 						<div class="form-group">
-							<label for="houseId">Id:</label> <input id="houseId"
-								class="form-control" type="number" placeholder="Id number">
+							<label for="houseId">Id:</label> <input id="houseId" class="form-control" type="number"
+								placeholder="Id number">
 						</div>
 						<div class="form-group">
-							<label for="housePrice">Price:</label> <input id="housePrice"
-								class="form-control" type="number" placeholder="Price">
+							<label for="housePrice">Price:</label> <input id="housePrice" class="form-control"
+								type="number" placeholder="Price">
 						</div>
 						<div class="form-group">
-							<label for="houseAddress">Address:</label> <input
-								id="houseAddress" class="form-control" type="text"
-								placeholder="Address">
+							<label for="houseAddress">Address:</label> <input id="houseAddress" class="form-control"
+								type="text" placeholder="Address">
 						</div>
 						<div class="form-group">
-							<label for="houseNeighborhood">Neighborhood:</label> <input
-								id="houseNeighborhood" class="form-control" type="text"
-								placeholder="Neighborhood">
+							<label for="houseNeighborhood">Neighborhood:</label> <input id="houseNeighborhood"
+								class="form-control" type="text" placeholder="Neighborhood">
 						</div>
 						<div class="form-group">
-							<label for="houseCity">City:</label> <input id="houseCity"
-								class="form-control" type="text" placeholder="City">
+							<label for="houseCity">City:</label> <input id="houseCity" class="form-control" type="text"
+								placeholder="City">
 						</div>
 						<button class="btn btn-dark" onclick="register()">Submit</button>
 					</form>
 					<br />
 				</div>
 
+				<!-- Multiple Houses Form -->
 				<div id="multipleHousesForm">
 					<form onsubmit="return false">
 						<h4>Add multiple houses (Json format):</h4>
@@ -87,47 +115,52 @@
 			</div>
 		</div>
 		<br />
+
+		<!-- Loading Animation-->
 		<div id="loading" hidden="true">
 			<img src="loading.gif" width="150px" /><br />
 		</div>
 
+		<!-- Houses Table -->
 		<div class="row">
 			<div id="houseTable" class="col-12 section table-responsive">
 				<h1>Houses</h1>
 				<div class="row">
 					<div class="d-flex justify-content-center col-2">
-						<i class="fas fa-home" style="font-size: 5em; color:#2980b9"></i> 
+						<i class="fas fa-home" style="font-size: 5em; color:#2980b9"></i>
 					</div>
 
-					<div id="houseSearchById"
-						class="d-flex justify-content-center col-4">
+					<!-- Search by id -->
+					<div id="houseSearchById" class="d-flex justify-content-center col-4">
 						<form onsubmit="return false">
 							<div class="searchById">
 								<h4>Search by id:</h4>
-								<label for="searchById"><input id="id"
-									class="form-control" type="number" placeholder="Id number"></label>
+								<label for="searchById"><input id="id" class="form-control" type="number"
+										placeholder="Id number"></label>
 								<button class="btn btn-dark" onclick="findById()">Submit</button>
 							</div>
 						</form>
 					</div>
 
-					<div id="houseSearchByPrice"
-						class="d-flex justify-content-center col-6">
+					<!-- Search by price -->
+					<div id="houseSearchByPrice" class="d-flex justify-content-center col-6">
 						<form onsubmit="return false">
 							<div id="searchPrice">
 								<h4>Search by price:</h4>
-								<label for="minPrice"><input id="minPrice"
-									class="form-control" type="number" placeholder="Min price"></label>
-								<label for="maxPrice"><input id="maxPrice"
-									class="form-control" type="number" placeholder="Max price"></label>
+								<label for="minPrice"><input id="minPrice" class="form-control" type="number"
+										placeholder="Min price"></label>
+								<label for="maxPrice"><input id="maxPrice" class="form-control" type="number"
+										placeholder="Max price"></label>
 								<button class="btn btn-dark" onclick="findByPrice()">Submit</button>
 							</div>
 						</form>
 					</div>
+
+					<!-- Reset Filters -->
 					<div style="margin-left: 15px; margin-bottom: 15px">
 						<button class="btn btn-outline-secondary" onclick="resetFilters()">Reset filters</button>
 					</div>
-					
+
 					<table class="table" onsubmit="reload()">
 						<thead>
 							<tr>
@@ -142,21 +175,23 @@
 							</tr>
 						</thead>
 						<tbody>
-							<!-- vazio para inserir dados com JavaScript -->
+							<!-- Empty space for JavaScript data / vazio para inserir dados com JavaScript -->
 						</tbody>
-					</table>
+					</table>	
+
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<footer>		
+	<footer>
 		<p>
-			See source code at  <a href="https://github.com/cindyokino/houseSearch"> Github <i class="fab fa-github"></i></a><br> 		
-			<a href="https://github.com/cindyokino"><i class="fab fa-github fa-2x"></i></a> 
+			See source code at <a href="https://github.com/cindyokino/houseSearch"> Github <i
+					class="fab fa-github"></i></a><br>
+			<a href="https://github.com/cindyokino"><i class="fab fa-github fa-2x"></i></a>
 			<a href="https://www.linkedin.com/in/cindy-machado-9b7156aa/"><i class="fab fa-linkedin fa-2x"></i></a>
-			<a href="mailto:cindy-okino@hotmail.com"><i class="far fa-envelope fa-2x"></i></a><br> 		
-			Author: Cindy Okino	
+			<a href="mailto:cindy-okino@hotmail.com"><i class="far fa-envelope fa-2x"></i></a><br>
+			Author: Cindy Okino
 		</p>
 	</footer>
 
@@ -165,16 +200,16 @@
 
 <script language="javascript">
 	const baseUrl = "https://house-search-app.herokuapp.com";
-   	// const baseUrl = "http://localhost:8080";
+	// const baseUrl = "http://localhost:8080";
 
 	function findById() {
 		let id = document.getElementById("id").value;
-		
+
 		let xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
+		xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
-				let housesList  = new Array();
-				housesList.push(JSON.parse(this.responseText)); 
+				let housesList = new Array();
+				housesList.push(JSON.parse(this.responseText));
 				document.getElementById("loading").hidden = true;
 				populateTable(housesList);
 			}
@@ -183,29 +218,29 @@
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send();
 		document.getElementById("loading").hidden = false;
-		
+
 		document.querySelector("#houseSearchById > form").reset();
 	}
-	
+
 	function findByPrice() {
 		let minPrice = document.getElementById("minPrice").value;
 		let maxPrice = document.getElementById("maxPrice").value;
-		
+
 		const target = new URL(baseUrl + '/houses');
 		const params = new URLSearchParams();
-		if(minPrice != "") {
+		if (minPrice != "") {
 			params.set('minPrice', minPrice);
 		}
-		if(maxPrice != "") {
+		if (maxPrice != "") {
 			params.set('maxPrice', maxPrice);
 		}
 		target.search = params.toString();
-		
+
 		let xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
+		xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 				document.getElementById("loading").hidden = true;
-				let housesList  = JSON.parse(this.responseText);
+				let housesList = JSON.parse(this.responseText);
 				populateTable(housesList);
 			}
 		};
@@ -226,29 +261,29 @@
 	}
 
 	showForm();
-		
+
 	function register() {
 		let requestBody;
-		
+
 		if (document.getElementById('oneHouse').checked) {
 			let house = {};
-	
+
 			house.id = document.getElementById("houseId").value;
 			house.price = document.getElementById("housePrice").value;
 			house.address = document.getElementById("houseAddress").value;
 			house.neighborhood = document.getElementById("houseNeighborhood").value;
 			house.city = document.getElementById("houseCity").value;
-	
+
 			let houseArray = new Array();
 			houseArray.push(house);
-			
+
 			requestBody = JSON.stringify(houseArray);
-		}else {
+		} else {
 			requestBody = document.getElementById("multipleHousesTextArea").value;
 		}
 
 		var xhttp = new XMLHttpRequest(); // XMLHttpRequest torna o envio de requisicoes HTTP muito facil.
-		xhttp.onreadystatechange = function() { // Basta criar uma instancia do objeto...
+		xhttp.onreadystatechange = function () { // Basta criar uma instancia do objeto...
 			if (this.readyState == 4 && this.status == 200) {
 				document.getElementById("loading").hidden = true;
 				updateTable();
@@ -258,50 +293,50 @@
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send(requestBody);
 		document.getElementById("loading").hidden = false;
-		
+
 		document.querySelector("#oneHouseForm > form").reset();
 		document.querySelector("#multipleHousesForm > form").reset();
 	}
 
 	function showTable() {
 		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
+		xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
-				let housesList  = JSON.parse(this.responseText);
-				populateTable(housesList);				
+				let housesList = JSON.parse(this.responseText);
+				populateTable(housesList);
 			}
 		};
 		xhttp.open("GET", baseUrl + "/houses", true);
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send();
-	}		
+	}
 	showTable(); // chama a funcao showTable()
-	
-	function updateTable() {		
+
+	function updateTable() {
 		var table = document.querySelector("table");
 		var old_tbody = document.querySelector("table > tbody");
 		var new_tbody = document.createElement('tbody');
 		table.replaceChild(new_tbody, old_tbody);
 		showTable();
-	}	
-	
-	function resetFilters() {	
+	}
+
+	function resetFilters() {
 		document.querySelector("#houseSearchById > form").reset();
 		document.querySelector("#houseSearchByPrice > form").reset();
 		updateTable();
-		
+
 		document.querySelector("body").click();
 	}
-	
+
 	function populateTable(housesList) {
 		var table = document.querySelector("table");
 		var old_tbody = document.querySelector("table > tbody");
 		var new_tbody = document.createElement('tbody');
 		table.replaceChild(new_tbody, old_tbody);
-		
+
 		var tbody = document.querySelector("table > tbody"); // > pega o tbody que e o childOf table
-		
-		housesList.forEach(house => {	
+
+		housesList.forEach(house => {
 			var row = tbody.insertRow(-1);
 			var cellId = row.insertCell(0);
 			var cellPrice = row.insertCell(1);
@@ -311,72 +346,72 @@
 			var cellRegisteredOn = row.insertCell(5);
 			var cellUpdatedOn = row.insertCell(6);
 			var cellActions = row.insertCell(7);
-		
+
 			var last = [house.priceHistory.length - 1];
-			
+
 			cellId.innerText = house.id;
 			cellPrice.innerText = house.priceHistory[last].price;
 			cellAddress.innerText = house.address;
 			cellNeighborhood.innerText = house.neighborhood;
 			cellCity.innerText = house.city;
 			cellRegisteredOn.innerText = house.registeredOn;
-			
+
 			let updatedDate;
 			updatedDate = house.priceHistory[last].updatedOn;
 			updatedDate = moment(updatedDate);
 			updatedDate = updatedDate.format('YYYY-MM-DD');
-			cellUpdatedOn.innerText = updatedDate;	
-			
+			cellUpdatedOn.innerText = updatedDate;
+
 			let divButtons = cellActions.appendChild(document.createElement("div"));
 			divButtons.className = "row";
-						
+
 			let editButtonDiv = divButtons.appendChild(document.createElement("div"));
 			let editButton = editButtonDiv.appendChild(document.createElement("a"));
 			editButtonDiv.className = "d-flex justify-content-center col-6";
 			editButton.className = "fas fa-pencil-alt";
 			editButton.style = "cursor: pointer";
-			editButton.addEventListener("click", function() {fillEditForm(house)});
-						
+			editButton.addEventListener("click", function () { fillEditForm(house) });
+
 			let deleteButtonDiv = divButtons.appendChild(document.createElement("div"));
 			let deleteButton = deleteButtonDiv.appendChild(document.createElement("a"));
 			deleteButtonDiv.className = "d-flex justify-content-center col-6";
 			deleteButton.className = "fas fa-times";
-			deleteButton.idName = "deleteButton"; 
+			deleteButton.idName = "deleteButton";
 			deleteButton.style = "cursor: pointer";
-			deleteButton.addEventListener("click", function() {deleteHouse(house.id)});		
-		});				
+			deleteButton.addEventListener("click", function () { deleteHouse(house.id) });
+		});
 	}
-	
+
 	function fillEditForm(house, priceHistory) {
-		
+
 		let houseIdInput = document.getElementById("houseId");
 		houseIdInput.value = house.id;
-		
+
 		let housePriceInput = document.getElementById("housePrice");
 		housePriceInput.value = house.price;
-		
+
 		let houseAddressInput = document.getElementById("houseAddress");
 		houseAddressInput.value = house.address;
-		
+
 		let houseNeighborhoodInput = document.getElementById("houseNeighborhood");
-		houseNeighborhoodInput.value = house.neighborhood;		
-		
+		houseNeighborhoodInput.value = house.neighborhood;
+
 		let houseCityInput = document.getElementById("houseCity");
-		houseCityInput.value = house.city;		
-		
+		houseCityInput.value = house.city;
+
 		topFunction();
 	}
-		
+
 	function topFunction() { // When the user clicks on the button, scroll to the top of the document
 		document.body.scrollTop = 0; // For Safari
 		document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 	}
-		
-	function deleteHouse(houseId) {		
+
+	function deleteHouse(houseId) {
 		console.log(houseId);
-		
+
 		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
+		xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 204) {
 				updateTable();
 			}
@@ -385,7 +420,7 @@
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send();
 	}
-		
+
 </script>
 
 </html>
