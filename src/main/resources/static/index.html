@@ -12,7 +12,7 @@
 		gtag('config', 'UA-172337920-1');
 	</script>
 
-	<link rel="icon" type="image/png" href="houseSearchFavicon.png">
+	<link rel="icon" type="image/png" href="houseSearchFavicon.png">   
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="index.css">
 	<script src="https://kit.fontawesome.com/c20548da5e.js" crossorigin="anonymous"></script>
@@ -199,8 +199,8 @@
 
 
 <script language="javascript">
-	const baseUrl = "https://house-search-app.herokuapp.com";
-	// const baseUrl = "http://localhost:8080";
+	// const baseUrl = "https://house-search-app.herokuapp.com";
+	const baseUrl = "http://localhost:8080";
 
 	function findById() {
 		let id = document.getElementById("id").value;
@@ -350,12 +350,19 @@
 			var last = [house.priceHistory.length - 1];
 
 			cellId.innerText = house.id;
-			cellPrice.innerText = house.priceHistory[last].price;
+
+			// cellPrice.innerText = house.priceHistory[last].price;
+			// cellPrice.insertAdjacentHTML('beforeend', ' ' + '<i class="fas fa-history"></i>');
+			let priceDiv = cellPrice.appendChild(document.createElement("div"));
+			let historyButton = priceDiv.appendChild(document.createElement("a"));
+			historyButton.className = "fas fa-history";
+			priceDiv.append("alobcdef");
+
 			cellAddress.innerText = house.address;
 			cellNeighborhood.innerText = house.neighborhood;
 			cellCity.innerText = house.city;
 			cellRegisteredOn.innerText = house.registeredOn;
-
+ 
 			let updatedDate;
 			updatedDate = house.priceHistory[last].updatedOn;
 			updatedDate = moment(updatedDate);
