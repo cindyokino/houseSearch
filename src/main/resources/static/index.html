@@ -24,25 +24,19 @@
 </head>
 
 <body>
-
-	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-		Launch demo modal
-	</button>
-
 	<!-- Modal -->
-	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal fade" id="modalCenter" tabindex="-1" role="dialog"
+		aria-labelledby="modalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+					<h5 class="modal-title" id="modalLongTitle">Price History</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					...
+					... Add Price History Table !
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -197,7 +191,7 @@
 
 </body>
 
-
+<!-- MUDANDO O HTML COM JAVASCRIPT: -->
 <script language="javascript">
 	// const baseUrl = "https://house-search-app.herokuapp.com";
 	const baseUrl = "http://localhost:8080";
@@ -328,6 +322,7 @@
 		document.querySelector("body").click();
 	}
 
+// Populating Houses table
 	function populateTable(housesList) {
 		var table = document.querySelector("table");
 		var old_tbody = document.querySelector("table > tbody");
@@ -349,19 +344,22 @@
 
 			var last = [house.priceHistory.length - 1];
 
-			cellId.innerText = house.id;
-
-			// cellPrice.innerText = house.priceHistory[last].price;
-			// cellPrice.insertAdjacentHTML('beforeend', ' ' + '<i class="fas fa-history"></i>');
-			let priceDiv = cellPrice.appendChild(document.createElement("div"));
-			let historyButton = priceDiv.appendChild(document.createElement("a"));
-			historyButton.className = "fas fa-history";
-			priceDiv.append("alobcdef");
-
+			cellId.innerText = house.id;			
 			cellAddress.innerText = house.address;
 			cellNeighborhood.innerText = house.neighborhood;
 			cellCity.innerText = house.city;
 			cellRegisteredOn.innerText = house.registeredOn;
+		
+		// preco e botao historico - modo 1
+			cellPrice.insertAdjacentHTML('beforeend', house.priceHistory[last].price + ' ' + '<i class="fas fa-history" data-toggle="modal" data-target="#modalCenter" cursor="pointer"></i>');
+		// preco e botao historico - modo 2
+			// let priceDiv = cellPrice.appendChild(document.createElement("div"));
+			// priceDiv.append(house.priceHistory[last].price + " ");
+			// let historyButton = priceDiv.appendChild(document.createElement("a"));
+			// historyButton.className = "fas fa-history";
+			// historyButton.style = "cursor: pointer";
+			// historyButton.setAttribute("data-toggle","modal");
+			// historyButton.setAttribute("data-target","#exampleModalCenter");
  
 			let updatedDate;
 			updatedDate = house.priceHistory[last].updatedOn;
