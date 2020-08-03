@@ -193,8 +193,8 @@
 
 <!-- MUDANDO O HTML COM JAVASCRIPT: -->
 <script language="javascript">
-	// const baseUrl = "https://house-search-app.herokuapp.com";
-	const baseUrl = "http://localhost:8080";
+	const baseUrl = "https://house-search-app.herokuapp.com"; // Activate this for Heroku deploy
+	// const baseUrl = "http://localhost:8080"; // Activate this for development
 
 	function findById() {
 		let id = document.getElementById("id").value;
@@ -351,7 +351,7 @@
 			cellRegisteredOn.innerText = house.registeredOn;
 		
 		// preco e botao historico - modo 1
-			cellPrice.insertAdjacentHTML('beforeend', house.priceHistory[last].price + ' ' + '<i class="fas fa-history" data-toggle="modal" data-target="#modalCenter" cursor="pointer"></i>');
+			cellPrice.insertAdjacentHTML('beforeend', house.priceHistory[last].price + ' ' + '<i class="fas fa-history" data-toggle="modal" data-target="#modalCenter" style="cursor:pointer; color:gray" ></i>');
 		// preco e botao historico - modo 2
 			// let priceDiv = cellPrice.appendChild(document.createElement("div"));
 			// priceDiv.append(house.priceHistory[last].price + " ");
