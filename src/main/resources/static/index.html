@@ -34,7 +34,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-				</div>
+				</div>  
 				<div class="modal-body">
 					... Add Price History Table !
 				</div>
@@ -46,7 +46,7 @@
 		</div>
 	</div>
 
-	<!-- Register Forms -->
+	<!-- Register Forms Menu -->
 	<div class="container">
 		<div class="row">
 			<div class="col-12 section">
@@ -70,24 +70,19 @@
 					<form onsubmit="return false">
 						<h4>Add one house:</h4>
 						<div class="form-group">
-							<label for="houseId">Id:</label> <input id="houseId" class="form-control" type="number"
-								placeholder="Id number">
+							<label for="houseId">Id:</label> <input id="houseId" class="form-control" type="number" placeholder="Id number">
 						</div>
 						<div class="form-group">
-							<label for="housePrice">Price:</label> <input id="housePrice" class="form-control"
-								type="number" placeholder="Price">
+							<label for="housePrice">Price:</label> <input id="housePrice" class="form-control" type="number" placeholder="Price">
 						</div>
 						<div class="form-group">
-							<label for="houseAddress">Address:</label> <input id="houseAddress" class="form-control"
-								type="text" placeholder="Address">
+							<label for="houseAddress">Address:</label> <input id="houseAddress" class="form-control" type="text" placeholder="Address">
 						</div>
 						<div class="form-group">
-							<label for="houseNeighborhood">Neighborhood:</label> <input id="houseNeighborhood"
-								class="form-control" type="text" placeholder="Neighborhood">
+							<label for="houseNeighborhood">Neighborhood:</label> <input id="houseNeighborhood" class="form-control" type="text" placeholder="Neighborhood">
 						</div>
 						<div class="form-group">
-							<label for="houseCity">City:</label> <input id="houseCity" class="form-control" type="text"
-								placeholder="City">
+							<label for="houseCity">City:</label> <input id="houseCity" class="form-control" type="text" placeholder="City">
 						</div>
 						<button class="btn btn-dark" onclick="register()">Submit</button>
 					</form>
@@ -115,7 +110,7 @@
 			<img src="loading.gif" width="150px" /><br />
 		</div>
 
-		<!-- Houses Table -->
+		<!-- Houses Menu -->
 		<div class="row">
 			<div id="houseTable" class="col-12 section table-responsive">
 				<h1>Houses</h1>
@@ -155,7 +150,8 @@
 						<button class="btn btn-outline-secondary" onclick="resetFilters()">Reset filters</button>
 					</div>
 
-					<table class="table" onsubmit="reload()">
+					<!-- Houses Table -->
+					<table id="houseTable" class="table" onsubmit="reload()">
 						<thead>
 							<tr>
 								<th style="white-space: nowrap">Id</th>
@@ -176,6 +172,20 @@
 				</div>
 			</div>
 		</div>
+
+		Price History Table
+		<table id="priceHistoryTable" class="table" onsubmit="reload()">
+			<thead>
+				<tr>
+					<th>Price</th>
+					<th>Updated on</th>					
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Empty space for JavaScript data / vazio para inserir dados com JavaScript -->
+			</tbody>
+		</table>
+
 	</div>
 
 	<footer>
@@ -191,10 +201,10 @@
 
 </body>
 
-<!-- MUDANDO O HTML COM JAVASCRIPT: -->
+<!-- MANIPULANDO O HTML COM JAVASCRIPT: -->
 <script language="javascript">
-	const baseUrl = "https://house-search-app.herokuapp.com"; // Activate this for Heroku deploy
-	// const baseUrl = "http://localhost:8080"; // Activate this for development
+	// const baseUrl = "https://house-search-app.herokuapp.com"; // Activate this for Heroku deploy
+	const baseUrl = "http://localhost:8080"; // Activate this for development
 
 	function findById() {
 		let id = document.getElementById("id").value;
@@ -205,7 +215,7 @@
 				let housesList = new Array();
 				housesList.push(JSON.parse(this.responseText));
 				document.getElementById("loading").hidden = true;
-				populateTable(housesList);
+				populateHouseTable(housesList);
 			}
 		};
 		xhttp.open("GET", baseUrl + "/houses/" + id, true); //...abrir uma url e fazer uma requisicao.
@@ -235,7 +245,7 @@
 			if (this.readyState == 4 && this.status == 200) {
 				document.getElementById("loading").hidden = true;
 				let housesList = JSON.parse(this.responseText);
-				populateTable(housesList);
+				populateHouseTable(housesList);
 			}
 		};
 		xhttp.open("GET", target, true); //...abrir uma url e fazer uma requisicao.
@@ -292,26 +302,26 @@
 		document.querySelector("#multipleHousesForm > form").reset();
 	}
 
-	function showTable() {
+	function showHouseTable() {
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 				let housesList = JSON.parse(this.responseText);
-				populateTable(housesList);
+				populateHouseTable(housesList);
 			}
 		};
 		xhttp.open("GET", baseUrl + "/houses", true);
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send();
 	}
-	showTable(); // chama a funcao showTable()
+	showHouseTable(); // chama a funcao showHouseTable()
 
 	function updateTable() {
-		var table = document.querySelector("table");
-		var old_tbody = document.querySelector("table > tbody");
+		var houseTable = document.querySelector("table#houseTable");
+		var old_tbody = document.querySelector("table#houseTable > tbody");
 		var new_tbody = document.createElement('tbody');
-		table.replaceChild(new_tbody, old_tbody);
-		showTable();
+		houseTable.replaceChild(new_tbody, old_tbody);
+		showHouseTable();
 	}
 
 	function resetFilters() {
@@ -323,13 +333,13 @@
 	}
 
 // Populating Houses table
-	function populateTable(housesList) {
-		var table = document.querySelector("table");
-		var old_tbody = document.querySelector("table > tbody");
+	function populateHouseTable(housesList) {
+		var houseTable = document.querySelector("table#houseTable");
+		var old_tbody = document.querySelector("table#houseTable > tbody");
 		var new_tbody = document.createElement('tbody');
-		table.replaceChild(new_tbody, old_tbody);
+		houseTable.replaceChild(new_tbody, old_tbody);
 
-		var tbody = document.querySelector("table > tbody"); // > pega o tbody que e o childOf table
+		var tbody = document.querySelector("table#houseTable > tbody"); // > pega o tbody que e o childOf table
 
 		housesList.forEach(house => {
 			var row = tbody.insertRow(-1);
@@ -342,8 +352,6 @@
 			var cellUpdatedOn = row.insertCell(6);
 			var cellActions = row.insertCell(7);
 
-			var last = [house.priceHistory.length - 1];
-
 			cellId.innerText = house.id;			
 			cellAddress.innerText = house.address;
 			cellNeighborhood.innerText = house.neighborhood;
@@ -351,6 +359,7 @@
 			cellRegisteredOn.innerText = house.registeredOn;
 		
 		// preco e botao historico - modo 1
+			let last = house.priceHistory.length - 1;
 			cellPrice.insertAdjacentHTML('beforeend', house.priceHistory[last].price + ' ' + '<i class="fas fa-history" data-toggle="modal" data-target="#modalCenter" style="cursor:pointer; color:gray" ></i>');
 		// preco e botao historico - modo 2
 			// let priceDiv = cellPrice.appendChild(document.createElement("div"));
@@ -387,13 +396,26 @@
 		});
 	}
 
+// Populating Price History table
+	// function populatePriceHistoryTable(priceHistory) {
+	// 	var table = document.querySelector("table#priceHistoryTable");
+	// 	var old_tbody = document.querySelector("table#priceHistoryTable > tbody");
+	// 	var new_tbody = document.createElement('tbody');
+	// 	table.replaceChild(new_tbody, old_tbody);
+
+	// 	var tbody = document.querySelector("table#priceHistoryTable > tbody"); // > pega o tbody que e o childOf table
+
+	// 	//========================================= STOPED HERE ======================================
+	// }
+
 	function fillEditForm(house, priceHistory) {
 
 		let houseIdInput = document.getElementById("houseId");
 		houseIdInput.value = house.id;
 
 		let housePriceInput = document.getElementById("housePrice");
-		housePriceInput.value = house.price;
+		let last = house.priceHistory.length - 1;
+		housePriceInput.value = house.priceHistory[last].price;
 
 		let houseAddressInput = document.getElementById("houseAddress");
 		houseAddressInput.value = house.address;
