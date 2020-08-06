@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.cindyokino.houseSearch.entities.House;
-import com.cindyokino.houseSearch.entities.PriceHistory;
+import com.cindyokino.houseSearch.entities.PriceHistoryList;
 import com.cindyokino.houseSearch.repositories.HouseRepository;
-import com.cindyokino.houseSearch.repositories.PriceHistoryRepository;
+import com.cindyokino.houseSearch.repositories.PriceHistoryListRepository;
 
 @Profile("dev")
 @Configuration
@@ -22,7 +22,7 @@ public class TestConfig implements CommandLineRunner { // CommandLineRunner inic
 	private HouseRepository houseRepository;
 	
 	@Autowired
-	private PriceHistoryRepository priceHistoryRepository;
+	private PriceHistoryListRepository priceHistoryRepository;
 	
 
 	@Override
@@ -35,19 +35,19 @@ public class TestConfig implements CommandLineRunner { // CommandLineRunner inic
 		houseRepository.save(house2);
 		
 		
-		PriceHistory priceHistory1 = PriceHistory.builder()
+		PriceHistoryList priceHistory1 = PriceHistoryList.builder()
 				.house(house1)
 				.price(500000L)
 				.updatedOn(LocalDateTime.now().minusDays(2))
 				.build();
 		
-		PriceHistory priceHistory2 = PriceHistory.builder()
+		PriceHistoryList priceHistory2 = PriceHistoryList.builder()
 				.house(house2)
 				.price(800000L)
 				.updatedOn(LocalDateTime.now().minusDays(1))
 				.build();
 		
-		PriceHistory priceHistory3 = PriceHistory.builder()
+		PriceHistoryList priceHistory3 = PriceHistoryList.builder()
 				.house(house2)
 				.price(900000L)
 				.updatedOn(LocalDateTime.now().minusDays(5))

@@ -21,9 +21,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.cindyokino.houseSearch.entities.House;
 import com.cindyokino.houseSearch.entities.HouseDto;
-import com.cindyokino.houseSearch.entities.PriceHistory;
+import com.cindyokino.houseSearch.entities.PriceHistoryList;
 import com.cindyokino.houseSearch.repositories.HouseRepository;
-import com.cindyokino.houseSearch.repositories.PriceHistoryRepository;
+import com.cindyokino.houseSearch.repositories.PriceHistoryListRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class HouseServiceTest {
@@ -35,7 +35,7 @@ public class HouseServiceTest {
 	private HouseRepository houseRepositoryMock;
 	
 	@Mock
-	private PriceHistoryRepository priceHistoryRepositoryMock;
+	private PriceHistoryListRepository priceHistoryRepositoryMock;
 
 	@Test
 	public void findAllTest_success() {
@@ -66,7 +66,7 @@ public class HouseServiceTest {
 	public void insertHouseTest_forExistingId_keepRegisteredOn() {
 		HouseDto houseDto = new HouseDto(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", 500000L);
 		House newHouse = mapToHouse(houseDto);
-		PriceHistory priceHistory = new PriceHistory();
+		PriceHistoryList priceHistory = new PriceHistoryList();
 		priceHistory.setPrice(500001L);
 		House existingHouse = 
 				new House(1L, "Old Address", "Old City", "Old neighborhood", LocalDate.now().minusDays(5L), new ArrayList<>(Collections.singletonList(priceHistory)));
@@ -80,15 +80,15 @@ public class HouseServiceTest {
 		
 		MatcherAssert.assertThat(actualHouseList.size(), Matchers.is(1));	
 		MatcherAssert.assertThat(actualHouseList.get(0).getRegisteredOn(), Matchers.is(existingHouse.getRegisteredOn()));	
-		MatcherAssert.assertThat(actualHouseList.get(0).getPriceHistory().size(), Matchers.is(2));
-		MatcherAssert.assertThat(actualHouseList.get(0).getPriceHistory().get(0).getPrice(), Matchers.is(priceHistory.getPrice()));
+		MatcherAssert.assertThat(actualHouseList.get(0).getPriceHistoryList().size(), Matchers.is(2));
+		MatcherAssert.assertThat(actualHouseList.get(0).getPriceHistoryList().get(0).getPrice(), Matchers.is(priceHistory.getPrice()));
 	}
 	
 	@Test
 	public void insertHouseTest_forNewId() {
 		HouseDto houseDto = new HouseDto(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", 500000L);
 		House newHouse = mapToHouse(houseDto);
-		PriceHistory priceHistory = new PriceHistory();
+		PriceHistoryList priceHistory = new PriceHistoryList();
 							
 		Mockito.when(houseRepositoryMock.findById(newHouse.getId())).thenReturn(Optional.empty());
 		Mockito.when(houseRepositoryMock.saveAndFlush(Mockito.any())).thenReturn(newHouse);
@@ -99,14 +99,14 @@ public class HouseServiceTest {
 		
 		MatcherAssert.assertThat(actualHouseList.size(), Matchers.is(1));
 		MatcherAssert.assertThat(actualHouseList.get(0).getRegisteredOn(), Matchers.is(LocalDate.now()));
-		MatcherAssert.assertThat(actualHouseList.get(0).getPriceHistory().size(), Matchers.is(1));
-		MatcherAssert.assertThat(actualHouseList.get(0).getPriceHistory().get(0).getPrice(), Matchers.is(houseDto.getPrice()));
+		MatcherAssert.assertThat(actualHouseList.get(0).getPriceHistoryList().size(), Matchers.is(1));
+		MatcherAssert.assertThat(actualHouseList.get(0).getPriceHistoryList().get(0).getPrice(), Matchers.is(houseDto.getPrice()));
 	}
 	
 	@Test
 	public void updateHouseTest_byId() {
 		HouseDto houseDto = new HouseDto(1L, "TestAddress1", "TestCity1", "TestNeighborhood1", 100000L);
-		PriceHistory priceHistory = new PriceHistory();
+		PriceHistoryList priceHistory = new PriceHistoryList();
 		priceHistory.setPrice(100100L);
 		House existingHouse = 
 				new House(1L, "Old Address", "Old City", "Old neighborhood", LocalDate.now().minusDays(5L), new ArrayList<>(Collections.singletonList(priceHistory)));

@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
 
 import com.cindyokino.houseSearch.entities.House;
 import com.cindyokino.houseSearch.entities.HouseDto;
-import com.cindyokino.houseSearch.entities.PriceHistory;
+import com.cindyokino.houseSearch.entities.PriceHistoryList;
 import com.cindyokino.houseSearch.repositories.HouseRepository;
-import com.cindyokino.houseSearch.repositories.PriceHistoryRepository;
+import com.cindyokino.houseSearch.repositories.PriceHistoryListRepository;
 
 @Service
 public class HouseService {
@@ -26,7 +26,7 @@ public class HouseService {
 	private HouseRepository houseRepository;
 
 	@Autowired
-	private PriceHistoryRepository priceHistoryRepository;
+	private PriceHistoryListRepository priceHistoryRepository;
 
 	public List<House> findAll(Long minPrice, Long maxPrice) {
 		return houseRepository.findHousesByPriceRange(minPrice, maxPrice);
@@ -85,15 +85,15 @@ public class HouseService {
 		} else {
 			house.setRegisteredOn(LocalDate.now());
 	
-			PriceHistory priceHistory = new PriceHistory();
-			priceHistory.setHouse(house);
-			priceHistory.setPrice(price);
-			priceHistory.setUpdatedOn(LocalDateTime.now());
+			PriceHistoryList priceHistoryList = new PriceHistoryList();
+			priceHistoryList.setHouse(house);
+			priceHistoryList.setPrice(price);
+			priceHistoryList.setUpdatedOn(LocalDateTime.now());
 	
-			house.setPriceHistory(Collections.singletonList(priceHistory));
+			house.setPriceHistoryList(Collections.singletonList(priceHistoryList));
 	
 			houseRepository.saveAndFlush(house);
-			priceHistoryRepository.save(priceHistory);
+			priceHistoryRepository.save(priceHistoryList);
 		}
 	
 		return house;
@@ -101,20 +101,20 @@ public class HouseService {
 
 	private House update(House houseToUpdate, House houseInDb, Long price) {
 			houseToUpdate.setRegisteredOn(houseInDb.getRegisteredOn());
-			houseToUpdate.setPriceHistory(houseInDb.getPriceHistory());
+			houseToUpdate.setPriceHistoryList(houseInDb.getPriceHistoryList());
 	
-			houseInDb.getPriceHistory().stream()
+			houseInDb.getPriceHistoryList().stream()
 	//				.sorted(Comparator.comparing(PriceHistory::getUpdatedOn).reversed()) // igual a linha abaixo
 					.sorted(Comparator.comparing(pricehist -> pricehist.getUpdatedOn(), Comparator.reverseOrder()))
 					.findFirst()
 					.filter(priceHist -> !priceHist.getPrice().equals(price))
 					.ifPresent(priceHist -> {
-						PriceHistory priceHistory = new PriceHistory();
+						PriceHistoryList priceHistory = new PriceHistoryList();
 						priceHistory.setHouse(houseToUpdate);
 						priceHistory.setPrice(price);
 						priceHistory.setUpdatedOn(LocalDateTime.now());
 	
-						houseToUpdate.getPriceHistory().add(priceHistory);
+						houseToUpdate.getPriceHistoryList().add(priceHistory);
 	
 						priceHistoryRepository.save(priceHistory);
 					});

@@ -23,7 +23,7 @@
 	<title>House Search Application</title>
 </head>
 
-<body>
+<body> 
 	<!-- Modal -->
 	<div class="modal fade" id="modalCenter" tabindex="-1" role="dialog"
 		aria-labelledby="modalCenterTitle" aria-hidden="true">
@@ -36,11 +36,20 @@
 					</button>
 				</div>  
 				<div class="modal-body">
-					... Add Price History Table !
+				<!-- Price History Table -->
+					<table id="priceHistoryListTable" class="table" onsubmit="reload()">
+						<thead>
+							<tr>
+								<th>Price</th>
+								<th>Updated on</th>					
+							</tr>
+						</thead>
+						<tbody>
+							<!-- Empty space for JavaScript data / vazio para inserir dados com JavaScript -->
+						</tbody>
+					</table>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
 				</div>
 			</div>
 		</div>
@@ -172,20 +181,6 @@
 				</div>
 			</div>
 		</div>
-
-		Price History Table
-		<table id="priceHistoryTable" class="table" onsubmit="reload()">
-			<thead>
-				<tr>
-					<th>Price</th>
-					<th>Updated on</th>					
-				</tr>
-			</thead>
-			<tbody>
-				<!-- Empty space for JavaScript data / vazio para inserir dados com JavaScript -->
-			</tbody>
-		</table>
-
 	</div>
 
 	<footer>
@@ -359,11 +354,12 @@
 			cellRegisteredOn.innerText = house.registeredOn;
 		
 		// preco e botao historico - modo 1
-			let last = house.priceHistory.length - 1;
-			cellPrice.insertAdjacentHTML('beforeend', house.priceHistory[last].price + ' ' + '<i class="fas fa-history" data-toggle="modal" data-target="#modalCenter" style="cursor:pointer; color:gray" ></i>');
+			let last = house.priceHistoryList.length - 1;
+			let priceHistoryButton = cellPrice.insertAdjacentHTML('beforeend', house.priceHistoryList[last].price + ' ' + '<i id="priceHistoryButton'+ house.id + '" class="fas fa-history" data-toggle="modal" data-target="#modalCenter" style="cursor:pointer; color:gray" ></i>');
+			document.getElementById('priceHistoryButton'+house.id).addEventListener("click", function () { populatepriceHistoryListTable(house.priceHistoryList) });
 		// preco e botao historico - modo 2
 			// let priceDiv = cellPrice.appendChild(document.createElement("div"));
-			// priceDiv.append(house.priceHistory[last].price + " ");
+			// priceDiv.append(house.priceHistoryList[last].price + " ");
 			// let historyButton = priceDiv.appendChild(document.createElement("a"));
 			// historyButton.className = "fas fa-history";
 			// historyButton.style = "cursor: pointer";
@@ -371,7 +367,7 @@
 			// historyButton.setAttribute("data-target","#exampleModalCenter");
  
 			let updatedDate;
-			updatedDate = house.priceHistory[last].updatedOn;
+			updatedDate = house.priceHistoryList[last].updatedOn;
 			updatedDate = moment(updatedDate);
 			updatedDate = updatedDate.format('YYYY-MM-DD');
 			cellUpdatedOn.innerText = updatedDate;
@@ -396,26 +392,37 @@
 		});
 	}
 
-// Populating Price History table
-	// function populatePriceHistoryTable(priceHistory) {
-	// 	var table = document.querySelector("table#priceHistoryTable");
-	// 	var old_tbody = document.querySelector("table#priceHistoryTable > tbody");
-	// 	var new_tbody = document.createElement('tbody');
-	// 	table.replaceChild(new_tbody, old_tbody);
+	function populatepriceHistoryListTable(priceHistoryList) {
+		var table = document.querySelector("table#priceHistoryListTable");
+		var old_tbody = document.querySelector("table#priceHistoryListTable > tbody");
+		var new_tbody = document.createElement('tbody');
+		table.replaceChild(new_tbody, old_tbody);
 
-	// 	var tbody = document.querySelector("table#priceHistoryTable > tbody"); // > pega o tbody que e o childOf table
+		var tbody = document.querySelector("table#priceHistoryListTable > tbody"); // > pega o tbody que e o childOf table
 
-	// 	//========================================= STOPED HERE ======================================
-	// }
+		priceHistoryList.forEach(priceHistory => {
+			var row = tbody.insertRow(-1);
+			var cellpriceHistoryList = row.insertCell(0);
+			var cellUpdatedOn = row.insertCell(1);
 
-	function fillEditForm(house, priceHistory) {
+			cellpriceHistoryList.innerText = priceHistory.price;	
+
+			let updatedDate;
+			updatedDate = priceHistory.updatedOn;
+			updatedDate = moment(updatedDate);
+			updatedDate = updatedDate.format('YYYY-MM-DD hh:mm:ss');
+			cellUpdatedOn.innerText = updatedDate;
+		});
+	}
+	
+	function fillEditForm(house, priceHistoryList) {
 
 		let houseIdInput = document.getElementById("houseId");
 		houseIdInput.value = house.id;
 
 		let housePriceInput = document.getElementById("housePrice");
-		let last = house.priceHistory.length - 1;
-		housePriceInput.value = house.priceHistory[last].price;
+		let last = house.priceHistoryList.length - 1;
+		housePriceInput.value = house.priceHistoryList[last].price;
 
 		let houseAddressInput = document.getElementById("houseAddress");
 		houseAddressInput.value = house.address;
@@ -433,7 +440,7 @@
 		document.body.scrollTop = 0; // For Safari
 		document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 	}
-
+ 
 	function deleteHouse(houseId) {
 		console.log(houseId);
 

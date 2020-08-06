@@ -162,7 +162,7 @@ public class HousesIntegrationTest {
 		assertThat(actualHouse.getCity(), is(houseToUpdate.getCity()));
 		assertThat(actualHouse.getNeighborhood(), is(houseToUpdate.getNeighborhood()));
 		assertThat(actualHouse.getAddress(), is(houseToUpdate.getAddress()));
-		assertThat(actualHouse.getPriceHistory(), Matchers.hasSize(2));
+		assertThat(actualHouse.getPriceHistoryList(), Matchers.hasSize(2));
 		
 	}
 	

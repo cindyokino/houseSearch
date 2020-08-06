@@ -1,4 +1,4 @@
-# Check the app (still in development) :
+# Check the app :
 
 https://house-search-app.herokuapp.com/
 

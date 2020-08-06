@@ -20,7 +20,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude="priceHistory")
+@EqualsAndHashCode(exclude="priceHistoryList")
 public class House {
 	
 	@Id
@@ -31,5 +31,5 @@ public class House {
 	private LocalDate registeredOn;
 	
 	@OneToMany(mappedBy = "house", orphanRemoval = true)
-	private List<PriceHistory> priceHistory;
+	private List<PriceHistoryList> priceHistoryList;
 }

@@ -26,7 +26,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude="house")
-public class PriceHistory {
+public class PriceHistoryList {
 
 	@Id
 	@GeneratedValue
