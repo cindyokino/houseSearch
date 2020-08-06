@@ -398,9 +398,16 @@
 		var new_tbody = document.createElement('tbody');
 		table.replaceChild(new_tbody, old_tbody);
 
-		var tbody = document.querySelector("table#priceHistoryListTable > tbody"); // > pega o tbody que e o childOf table
+		priceHistoryList.sort(function(b, a) {
+   			var dateA = a.updatedOn, dateB = b.updatedOn;
+   			if (dateA < dateB) return -1;
+    		if (dateA > dateB) return 1;
+    		return 0;
+		});	
 
-		priceHistoryList.forEach(priceHistory => {
+		priceHistoryList.forEach(priceHistory => {	
+
+		var tbody = document.querySelector("table#priceHistoryListTable > tbody"); // > pega o tbody que e o childOf table	
 			var row = tbody.insertRow(-1);
 			var cellpriceHistoryList = row.insertCell(0);
 			var cellUpdatedOn = row.insertCell(1);
